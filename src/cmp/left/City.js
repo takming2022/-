@@ -11,6 +11,7 @@ const City = () => {
     const [open4, setOpen4] = React.useState(false);
     const handleClick = () => {
         setOpen(!open);
+        console.log("123");
     };
     const handleClick2 = () => {
         setOpen2(!open2);
