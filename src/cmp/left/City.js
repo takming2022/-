@@ -107,7 +107,7 @@ const City = () => {
                 <ListItemIcon>
                     <ExploreIcon />
                 </ListItemIcon>
-                <ListItemText primary="中部" />
+                <ListItemText primary="南部" />
                 {open4 ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItemButton>
             <Collapse in={open4} timeout="auto" unmountOnExit>

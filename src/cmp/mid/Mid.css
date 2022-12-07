@@ -1,0 +1,9 @@
+.mid {
+    position: absolute;
+    width: 84%;
+    height: 100px;
+    left: 17%;
+    justify-content: space-around;
+    align-content: stretch;
+    flex-direction: row;
+}

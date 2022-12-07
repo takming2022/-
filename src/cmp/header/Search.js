@@ -10,13 +10,13 @@ const Search =() => {
         '&:hover': {
             backgroundColor: alpha('#a9a9a9', 0.45),
         },
-        top:'10px',
+        top:'-30%',
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '30%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(3),
-            width: '30%',
+            width: '100%',
         },
     }));
 
@@ -27,7 +27,7 @@ const Search =() => {
         pointerEvents: 'none',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
     }));
 
     const StyledInputBase = styled(InputBase)(({ theme }) => ({
