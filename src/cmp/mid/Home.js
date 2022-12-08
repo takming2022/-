@@ -1,13 +1,15 @@
 import React from 'react';
 import './Home.css';
 import CarD from './CarD';
-
-
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Unstable_Grid2';
 function Home() {
-    return (
-        <div>
-            <div className='home__section'>
-                <CarD title='房間1'
+  return (
+    <div>
+      <div className='home__section'>
+      <Box sx={{ flexGrow: 1 }}>
+      <Grid container  columns={{ xs: 6, sm: 8, md: 16 }}>
+      <CarD title='房間1'
                       index1='刊登者:'
                       index2='0x0769729d73668492D2C5e55f7FC616337ba5f819'
                       image=" https://cp4.100.com.tw/images/articles/202005/25/admin_30_1590394405_B679Us49MX.jpg!t1000.jpg"
@@ -37,9 +39,12 @@ function Home() {
                       index2='0x0769729d73668492D2C5e55f7FC616337ba5f819'
                       image=" https://cp4.100.com.tw/images/articles/202005/25/admin_30_1590394405_B679Us49MX.jpg!t1000.jpg"
                       />
-            </div>  
-        </div>
-    )
+      </Grid>
+    </Box>
+  
+      </div>
+    </div>
+  )
 }
 
 export default Home
