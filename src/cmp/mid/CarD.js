@@ -7,10 +7,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import './CarD.css'
 import Grid from '@mui/material/Unstable_Grid2';
-export default function CarD({title,index1,index2,image}) {
+import { Card_object } from '../../card_object/Card_object';
+export default function CarD({id,title,index1,index2,image}) {
+  function details() {
+    const aa = Card_object.filter(item => item.id ==id)
+    console.log(aa);
+  }
   return (
     <Grid  xs={3} sm={4} md={4}>
-    <Card className='Card' variant="outlined" sx={{ maxWidth:350,margin: 1,boxShadow: 1,borderRadius: 5 }}>
+    <Card  className='Card' variant="outlined" sx={{ maxWidth:350,margin: 1,boxShadow: 1,borderRadius: 5 }}>
       <CardMedia
         component="img"
         height="140"
@@ -28,8 +33,8 @@ export default function CarD({title,index1,index2,image}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">訂房</Button>
-        <Button size="small">查看詳情</Button>
+        <Button  size="small">訂房</Button>
+        <Button  onClick={details} size="small">查看詳情</Button>
       </CardActions>
     </Card>
     </Grid>

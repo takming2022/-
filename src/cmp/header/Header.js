@@ -8,21 +8,6 @@ import LanguageIcon from '@mui/icons-material/Language';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const Header = () => {
-    const [Account, setAccount] = useState("");
-    async function Login() {
-        const ethereum = window.ethereum;
-        var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-        var account = accounts[0];
-        var wallet_address = account;
-        setAccount(wallet_address);
-    }
-    useEffect(() => {
-        if (Account === "") {
-            setAccount("帳號資訊")
-        } else {
-            Login();
-        }
-    }, [Account])
     return (
         <div className='Header'>
             <div className='logo'>

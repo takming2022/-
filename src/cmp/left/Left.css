@@ -8,3 +8,7 @@
     flex-direction: column;
     /* white-space: nowrap; 不換行*/
 }
+.swal2-container.swal2-center>.swal2-popup{
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
+  }
