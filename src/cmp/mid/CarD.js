@@ -15,7 +15,7 @@ export default function CarD({id,title,index1,index2,image}) {
   }
   return (
     <Grid  xs={3} sm={4} md={4}>
-    <Card  className='Card' variant="outlined" sx={{ maxWidth:350,margin: 1,boxShadow: 1,borderRadius: 5 }}>
+    <Card  className='Card' variant="outlined" sx={{background:'#b6c4d1', maxWidth:350,margin: 1,boxShadow: 10,borderRadius: 5 }}>
       <CardMedia
         component="img"
         height="140"

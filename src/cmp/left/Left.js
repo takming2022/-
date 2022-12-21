@@ -1,84 +1,86 @@
-import City from './City'
-import './Left.css'
-import { IconButton, Stack, Button, Tooltip } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
-import Swal from 'sweetalert2';
+import React, { useState } from 'react';
+import {
+  DesktopOutlined,
+  FileOutlined,
+  PieChartOutlined,
+  TeamOutlined,
+  UserOutlined,
+  FireTwoTone,
+  FunnelPlotFilled 
+} from '@ant-design/icons';
+import '../Left/Left.css'
+import { Breadcrumb, Layout, Menu, theme } from 'antd';
+const { Header, Content, Footer, Sider } = Layout;
+function getItem(label, key, icon, children) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+  };
+}
+const onClick = (e) => {
+  console.log('click ', e.key);
+  if(e.key == 2){
+    window.open('https://ultimate-survior2.web.app/')
+  }
+};
+const items = [
+  getItem('玩家資訊', '1', <PieChartOutlined />),
+  getItem('遊戲', '2', <DesktopOutlined />),
+  getItem("搜尋熱門地區", '3', <FunnelPlotFilled />, [
+    getItem('歐洲', 'sub1', <FunnelPlotFilled />, [
+      getItem('法國', '法國',<FireTwoTone />),
+      getItem('摩納格', '摩納格',<FireTwoTone />),
+      getItem('英國', '英國',<FireTwoTone />),
+      getItem('愛爾蘭', '愛爾蘭',<FireTwoTone />),
+    ]),
+    getItem('亞洲', 'sub2', <FunnelPlotFilled />, [
+      getItem('台灣', '台灣',<FireTwoTone />),
+      getItem('中國', '中國',<FireTwoTone />),
+      getItem('日本', '日本',<FireTwoTone />),
+      getItem('泰國', '泰國',<FireTwoTone />),
+    ]),
+    getItem('美洲', 'sub3', <FunnelPlotFilled />, [
+      getItem('紐約', '紐約',<FireTwoTone />),
+      getItem('洛杉磯', '洛杉磯',<FireTwoTone />),
+      getItem('聖地牙哥', '聖地牙哥',<FireTwoTone />),
+      getItem('聖保羅', '聖保羅',<FireTwoTone />),
+    ]),
+    getItem('非洲', 'sub4', <FunnelPlotFilled />, [
+      getItem('埃及', '埃及',<FireTwoTone />),
+      getItem('尼日利亞', '尼日利亞',<FireTwoTone />),
+      getItem('摩洛哥', '摩洛哥',<FireTwoTone />),
+      getItem('突尼斯', '突尼斯',<FireTwoTone />),
+    ]),
+    getItem('大洋洲', 'sub5', <FunnelPlotFilled />, [
+      getItem('印度尼西亞', '印度尼西亞',<FireTwoTone />),
+      getItem('澳大利亞', '澳大利亞',<FireTwoTone />),
+      getItem('紐西蘭', '紐西蘭',<FireTwoTone />),
+      getItem('吐瓦魯', '吐瓦魯',<FireTwoTone />),
+    ]),
+  ]),
 
+];
 const Left = () => {
-  const [Account, setAccount] = useState("");
-  var wallet_address =""
-  const Swal = require('sweetalert2')
-  function link_adress_alert() {
-    Swal.fire({
-      title: '是否登入小狐狸',
-      width: 700,
-      icon: 'info',
-      confirmButtonText: '登入',
-      cancelButtonText: '取消',
-      showCancelButton: true,
-      showCloseButton: true
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await Login();
-      } else {
+  const [collapsed, setCollapsed] = useState(false);
 
-      }
-    })
-  }
-
-  async function Login() {
-    const ethereum = window.ethereum;
-    var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-    var account = accounts[0];
-    wallet_address = account;
-    setAccount(wallet_address)
-  }
-  useEffect(() => {
-    Login()
-  }, [])
-  
   return (
-    <div>
-      <div className='Left'>
-        {Account == "" ? <div style={{ width: '100%', marginTop: '10px' }}>
-          <Button style={{
-            borderRadius: 35,
-            backgroundColor: "#21b6ae",
-            padding: "10px 10px,10px",
-            fontSize: "10px",
-            width: '100%',
-          }} onClick={link_adress_alert} variant="contained">登入</Button>
-        </div> : <div style={{width:'100%',marginTop:'10px'}}>
-          <Button style={{
-            borderRadius: 20,
-            padding: "10px 10px,10px",
-            fontSize: "10px",
-            width:'100%',
-          }}  variant="outlined">{Account}</Button>
-        </div>}
-        <Button startIcon={<AccountCircleIcon />} style={{
-            borderRadius: 20,
-            padding: "",
-            fontSize: "px",
-            marginTop:'10px',
 
-          }} variant="outlined">帳戶訊息</Button>
-        <Button startIcon={<SportsEsportsIcon />} style={{
-            borderRadius: 20,
-            fontSize: "px",
-            color:'#9e9e9e',
-            borderColor:'#9e9e9e',
-            marginTop:'10px',
+    <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <div
+        style={{
+          height: 32,
+          margin: 16,
+          background: 'rgba(255, 255, 255, 0.2)',
+        }}
+      >
 
-          }}  variant="outlined">遊戲</Button>
-        <City />
       </div>
-    </div>
+      <Menu onClick={onClick} theme="dark"  defaultSelectedKeys={['1']} mode="inline"  items={items} />
+    </Sider>
 
   )
 }
-
 
 export default Left

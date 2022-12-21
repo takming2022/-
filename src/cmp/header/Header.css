@@ -1,7 +1,6 @@
 .Header {
     display: flex;
     flex-wrap: nowrap;
-    position: sticky;
     top: 0;
     z-index: 1;
     border-style:solid;
@@ -14,18 +13,19 @@
 .Icon {
     display: flex;
     justify-content: right;
-    width: 20%;
+    width: 30%;
 }
 
 .middle{
     display: flex;
     justify-content: center;
     align-items: center; 
-    width: 60%;
+    width: 40%;
 }
 
 .logo{
     display: flex ;
-    width: 20%;
+    width: 30%;
     justify-content: left;
+
 }
