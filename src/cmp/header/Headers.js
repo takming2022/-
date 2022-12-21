@@ -81,7 +81,7 @@ const Headers = () => {
       }}
     >
       <div className='logo'>
-        <img width='60' src='./image/Logo.png'></img>
+        <img width='60' src='../image/Logo.png'></img>
       </div>
       <div className='middle'>
         <Search
