@@ -8,7 +8,7 @@ import {
   FireTwoTone,
   FunnelPlotFilled 
 } from '@ant-design/icons';
-import '../left/Left.css'
+import '../Left/Left.css'
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {

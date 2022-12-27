@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import Left from './cmp/left/Left';
-import Headers from './cmp/header/Headers'
-import MId from './cmp/mid/Mid';
+import Left from './cmp/Left/Left';
+import Headers from './cmp/Header/Headers'
+import MId from './cmp/Mid/Mid';
 import Fotter from './cmp/Footer/Fotter';
-import Test from './cmp/mid/test';
+import Test from './cmp/Mid/test';
 import {
   BrowserRouter as Router,
   Route,
