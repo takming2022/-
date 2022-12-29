@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-
 import "./Header.css"
 import { Input, Space } from 'antd';
 import { IconButton, Stack, Tooltip } from '@mui/material';
@@ -42,23 +41,17 @@ const Headers = () => {
   async function Login() {
     const ethereum = window.ethereum;
     var accounts = await ethereum.request({ method: 'eth_requestAccounts' })
-      .then((e) => {
-        var account = e[0];
-        wallet_address = account;
-        setAccount(hidden(wallet_address))
-      }).catch((e) => {
-        if (e.code === 4001) {
-          window.alert('Please connect to MetaMask.');
-        }
-      });
+    .then((e) =>{
+      var account = e[0];
+      wallet_address = account;
+      setAccount(wallet_address)
+    }).catch((e)=>{
+      if (e.code === 4001) {
+        window.alert('Please connect to MetaMask.');
+      }
+    });
 
   }
-  function hidden(str) {
-    return (
-      str.substring(0, 6) +'....'+ str.substring(str.length - 4)
-    );
-  }
-
   async function Register() {
     await MySwal.fire({
       title: '刊登',
@@ -69,6 +62,11 @@ const Headers = () => {
     })
 
   }
+
+  const homeclick = () =>{
+    window.open('/','_self')
+  }
+
   const onSearch = (value) => console.log(value);
   const suffix = (
     <AudioOutlined
@@ -88,7 +86,7 @@ const Headers = () => {
       }}
     >
       <div className='logo'>
-        <img width='60' src='../image/Logo.png'></img>
+        <img width='60' src='../image/Logo.png' onClick={()=>homeclick()}/>
       </div>
       <div className='middle'>
         <Search
@@ -101,27 +99,23 @@ const Headers = () => {
         />
       </div>
       <div className='Icon'>
-        {Account == "" ?
-          <Button style={{
-            color: 'black',
-            borderColor: 'black',
+        {Account == "" ? 
+          <Button style={{ 
+            color:'black',
+            borderColor:'black',
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "10px",
-            width: '100px',
-          }} onClick={link_adress_alert} ghost>
+            width: '100px',}}  onClick={link_adress_alert}  ghost>
             連接錢包
-          </Button> :
-          <Button style={{
-            borderRadius: 35,
+          </Button> : 
+        <Button style={{ borderRadius: 35,
             margin: '15px 0px 0px 0',
-            fontSize: "80%",
-            width: '110px',
-            textAlign:'center'
-          }} type="primary" onClick={{}} ghost>
+            fontSize: "10px",
+            width: '100px',}} type="primary" onClick={{}}  ghost>
             {Account}
           </Button>
-        }
+}
         <Stack direction="row" >
           <Tooltip title="刊登">
             <IconButton onClick={Register} color="block" size="large">

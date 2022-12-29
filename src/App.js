@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import Left from './cmp/Left/Left';
-import Headers from './cmp/Header/Headers'
-import MId from './cmp/Mid/Mid';
+import Left from './cmp/left/Left';
+import Headers from './cmp/header/Headers'
+import MId from './cmp/mid/Mid';
 import Fotter from './cmp/Footer/Fotter';
-import Test from './cmp/Mid/test';
+import Test from './cmp/mid/test';
+import User from './user/user';
+import Checkin from './user/checkin';
+import Reserve from './user/reserve';
+import Tbcomment from './user/tbcomment';
+
 import {
   BrowserRouter as Router,
   Route,
@@ -26,6 +31,10 @@ const App = () => {
             <Routes>
               <Route exact path='/' element={<MId />} />
               <Route exact path='/room/:id' element={<Test />} />
+              <Route exact path='/user' element={<User/>} />
+              <Route exact path='/checkin' element={<Checkin />}/>
+              <Route exact path='/reserve' element={<Reserve />}/>
+              <Route exact path='/tbcomment' element={<Tbcomment />}/>
             </Routes>
           </Router>
           <Fotter />

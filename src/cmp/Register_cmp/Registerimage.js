@@ -85,16 +85,16 @@ const Registerimage = () => {
   );
   return (
     <div style={{}}>
-    <Divider orientation="left">商品圖片</Divider>
-    <div style={{display: 'flex',height:'150px', borderRadius:'20px',border: '1px ridge rgba(0, 0, 0, 0.3)'}}>
-      <div className='updatediv' >
-        
-        <Upload  {...uploadProps} >
-          {fileList.length > 2 ? null : uploadButton}
-        </Upload>
+      <Divider orientation="left">商品圖片</Divider>
+      <div style={{ display: 'flex', height: '150px', borderRadius: '20px', border: '1px ridge rgba(0, 0, 0, 0.3)' }}>
+        <div className='updatediv' >
+
+          <Upload  {...uploadProps} >
+            {fileList.length > 2 ? null : uploadButton}
+          </Upload>
+        </div>
+
       </div>
-     
-    </div>
     </div>
 
   );
