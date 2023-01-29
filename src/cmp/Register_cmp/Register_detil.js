@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {
-    InfoCircleOutlined, HomeTwoTone, CompassTwoTone,
-    MoneyCollectTwoTone, SwitcherTwoTone, TagTwoTone
-} from '@ant-design/icons';
+import { InfoCircleOutlined, HomeTwoTone, CompassTwoTone, 
+        MoneyCollectTwoTone, SwitcherTwoTone,TagTwoTone } from '@ant-design/icons';
 import { Input, Tooltip } from 'antd';
 import { Divider } from 'antd'
 import { Checkbox } from 'antd';
@@ -70,14 +68,14 @@ const Register_detil = () => {
             </div>
             <Divider orientation="left">房間描述</Divider>
             <div style={{ height: '150px', borderRadius: '20px', border: '1px ridge rgba(0, 0, 0, 0.3)' }}>
-                <TextArea
-                    showCount
-                    maxLength={100}
-                    style={{ width: '95%', height: 120, margin: '15px 10px 20px 20px' }}
-                    onChange={onChange}
-                    placeholder="房間敘述"
-                />
-            </div>
+                    <TextArea
+                        showCount
+                        maxLength={300}
+                        style={{ width:'95%',height: 120,margin: '15px 10px 20px 20px' }}
+                        onChange={onChange}
+                        placeholder="房間敘述"
+                    />
+                </div>
             <Divider orientation="left">其他設備</Divider>
             <div>
 

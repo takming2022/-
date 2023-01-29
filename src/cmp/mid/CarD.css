@@ -1,3 +1,8 @@
 .Card:hover{
     transform: scale(1.01);
 }
+.ant-card-actions{
+    border-radius: 10px 10px 20px 20px !important; 
+    background-color: #b6c4d1 !important;
+    border-color: rgba(0, 0, 0, 0.2) !important;
+}
