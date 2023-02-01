@@ -85,8 +85,8 @@ const Headers = () => {
     <Header
       style={{
         padding: 0,
-        background: '#214466',
-        backgroundColor: '#214466',
+        background: '#3c6894',
+        backgroundColor: '#3c6894',
         border: ' 1px solid rgba(0, 0, 0, 0.3)',
         display: 'flex'
       }}
@@ -100,7 +100,6 @@ const Headers = () => {
           enterButton="Search"
           size="large"
           suffix={suffix}
-
           onSearch={onSearch}
         />
       </div>
@@ -112,7 +111,7 @@ const Headers = () => {
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "10px",
-            width: '100px',
+            width: '35%',
           }} onClick={link_adress_alert} ghost>
             連接錢包
           </Button> :
@@ -120,7 +119,7 @@ const Headers = () => {
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "80%",
-            width: '110px',
+            width: '35%',
             textAlign:'center'
           }} type="primary" onClick={{}} ghost>
             {Account}
