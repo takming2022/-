@@ -5,11 +5,9 @@ import { Divider } from 'antd'
 import { useState, useEffect } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { create, CID } from "ipfs-http-client";
-const Registerimage = () => {
+const Registerimage = ({Contract_file_image, set_Contract_file_image}) => {
   const [fileList, setFileList] = useState([]);
-  const [fileListbase64, setFileListbase64] = useState([]);
   const [mode, setMode] = useState(false);
-  const [test, settest] = useState()
   var aa = []
   var bb = 0;
   async function ipfsupload(file)  {
@@ -50,9 +48,15 @@ const Registerimage = () => {
       }
       if (mode) {
         setFileList(files)
+        set_Contract_file_image(files)
       } else {
         console.log(fileList.length);
         setFileList((prev) => {
+          let newFiles = [...prev];
+          newFiles.push(file);
+          return newFiles;
+        });
+        set_Contract_file_image((prev) => {
           let newFiles = [...prev];
           newFiles.push(file);
           return newFiles;
@@ -62,6 +66,7 @@ const Registerimage = () => {
     },
     onRemove: (file) => {
       setFileList((prev) => prev.filter((f) => f.uid !== file.uid));
+      set_Contract_file_image((prev) => prev.filter((f) => f.uid !== file.uid));
     }
   };
   const uploadButton = (
@@ -78,6 +83,7 @@ const Registerimage = () => {
   );
   async function OKK() {
     console.log(fileList);
+    console.log(Contract_file_image);
   }
   // const [fileList, setFileList] = useState([]);
   // const [fileListbase64, setFileListbase64] = useState([]);
