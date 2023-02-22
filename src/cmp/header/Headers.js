@@ -114,7 +114,7 @@ const Headers = () => {
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "10px",
-
+            width: '40%',
             
           }} onClick={link_adress_alert} ghost>
             連接錢包
@@ -123,7 +123,7 @@ const Headers = () => {
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "80%",
-            width: '35%',
+            width: '40%',
             textAlign:'center'
           }} type="primary" onClick={{}} ghost>
             {Account}

@@ -7,7 +7,7 @@ const Fotter = () => {
     <Footer
           style={{
             textAlign: 'center',
-            background:'#b6c4d1',
+            background:'#E5E8EB',
             maxHeight:1,
             padding: '20px 0px 35px 0',
             
