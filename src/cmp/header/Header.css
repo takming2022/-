@@ -1,4 +1,8 @@
 .Header {
+    display: flex;
+    flex-wrap: nowrap;
+    top: 0;
+    z-index: 1;
     border-style:solid;
     border-width: 1px;
     border-color: #9e9e9e;
@@ -6,9 +10,14 @@
     background-color:white;
 }
 
-.Iconn {
-    position: relative;
-    top: -35px;
-    width: 300px;
-    float: right;
+.Icon {
+    display: flex;
+    justify-content: right;
+    width: 15%;}
+
+.middle{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    width: 85%;
 }

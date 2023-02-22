@@ -1,0 +1,11 @@
+.home__section {
+  position: absolute;
+  float: right;
+  width: 98%;
+  line-height: 30px;
+  padding: 0px;
+  display:flex ;
+  flex-direction:row;
+  flex-wrap: wrap;
+
+}
