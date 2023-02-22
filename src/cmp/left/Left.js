@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DesktopOutlined,
   FileOutlined,
@@ -89,21 +89,22 @@ const items = [
 
 ];
 const Left = () => {
-  const [collapsed, setCollapsed] = useState(false);
-
+  const [collapsed, setCollapsed] = useState(true);
+  const [leftwidth,setleftwidth] = useState();
+  
   return (
 
-    <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-      <div
+    <Sider style={{backgroundColor:'white',borderRight: '5px solid rgba(0, 0, 0, .2)'}}  collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+      <div id='log_img_div'
         style={{
-          height: 32,
-          margin: 16,
-          background: 'rgba(255, 255, 255, 0.2)',
+          padding:'10px',
+          background: 'rgba(0, 0, 0, 0.1)',
         }}
       >
-
+ <img  width='50' src='../image/Logo.png'></img>
       </div>
-      <Menu onClick={onClick} theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+     
+      <Menu onClick={onClick}  defaultSelectedKeys={['1']} mode="inline" items={items} />
     </Sider>
 
   )

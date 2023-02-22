@@ -25,7 +25,7 @@ const App = () => {
         }}
       >
         <Left />
-        <Layout className="site-layout" style={{ backgroundColor: '#b6c4d1' }}>
+        <Layout className="site-layout" style={{ backgroundColor: '#E5E8EB' }}>
           <Headers />
           <Router>
             <Routes>

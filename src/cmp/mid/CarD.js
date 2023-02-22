@@ -13,7 +13,7 @@ import { IconButton, Stack, Tooltip } from '@mui/material';
 import { EditOutlined, EllipsisOutlined, AccountBookOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import { styled } from '@mui/material/styles';
-import  { tooltipClasses } from '@mui/material/Tooltip';
+import { tooltipClasses } from '@mui/material/Tooltip';
 const { Meta } = Card;
 export default function CarD({ id, title, index1, index2, image }) {
   function details() {
@@ -23,69 +23,56 @@ export default function CarD({ id, title, index1, index2, image }) {
   const w = url => {
     window.open(url, '_blank')
   };
- function aaa(){
-  console.log(123);
- }
- const CustomWidthTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))({
-  [`& .${tooltipClasses.tooltip}`]: {
-    maxWidth: 500,
-    fontSize: '17px',
-  },
-});
+  function aaa() {
+    console.log(123);
+  }
+  const CustomWidthTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 500,
+      fontSize: '17px',
+    },
+  });
   return (
-    <Grid xs={3} sm={4} md={4}>
-       <Card
-    style={{
-       maxWidth: 1000, margin: 10, boxShadow: 10, borderRadius: '20px' ,background: '#b6c4d1',borderColor: 'rgba(0, 0, 0, 0.2)'
-    }}
-    cover={
-      <img
-        alt="example"
-        src={image}
-        style={{borderRadius: '20px 20px 0px 0px' ,width: '99.2%',margin: "1px 0px 0px 2px"}}
-      />
-    }
-    actions={[
-      <CustomWidthTooltip title="訂房">
-        <AccountBookOutlined  style={{}} onClick={aaa}/>
-      </CustomWidthTooltip>
-        ,
-      <CustomWidthTooltip title="查看詳情" >
-      <EllipsisOutlined key="ellipsis" onClick={() => {w(`/room/${id}`) ;console.log(123);}} />
-     </CustomWidthTooltip>,
-    ]}
-  >
-    <Meta
 
-      title={title}
-      description={index1 + index2}
-      
-    />
-  </Card>
-      {/* <Card className='Card' variant="outlined" sx={{ background: '#b6c4d1', maxWidth: 1000, margin: 1, boxShadow: 10, borderRadius: 5 }}>
-        <CardMedia
-          component="img"
-          height="140"
-          image={image}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+    <div class="windows_card">
+      <div class="heard_card">
+        <div class="menu-circle_card"></div>
+      </div>
+      <div class="card_card">
+        <div class="card-mask_card">
+          <div class="desc_card">
+            我是遮罩
+          </div>
+        </div>
+        <div class="cover_card">
+          <img className='img_card' src="https://cdn.pixabay.com/photo/2016/11/30/08/48/bedroom-1872196_1280.jpg" alt=""></img>
+        </div>
+        <div class="content_card">
+          <div class="title_card">
             {title}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
+          </div>
+          <div class="desc_card">
             {index1}
             <br></br>
             {index2}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">訂房</Button>
-          <Button onClick={() => w(`/room/${id}`)} size="small">查看詳情</Button>
-        </CardActions>
-      </Card> */}
-    </Grid>
+          </div>
+        </div>
+
+      </div>
+      <div class="card-btn_card">
+        <div class="btn_card">
+          <CustomWidthTooltip title="訂房">
+            <AccountBookOutlined style={{}} onClick={aaa} />
+          </CustomWidthTooltip>
+        </div>
+        <div class="btn_card">
+          <CustomWidthTooltip title="查看詳情" >
+            <EllipsisOutlined key="ellipsis" onClick={() => { w(`/room/${id}`); console.log(123); }} />
+          </CustomWidthTooltip>
+        </div>
+      </div>
+    </div>
   );
 }

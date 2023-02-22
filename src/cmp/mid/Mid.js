@@ -11,9 +11,12 @@ const MId = () => {
         token: { colorBgContainer },
     } = theme.useToken();
     return (
+        <div style={{padding:'0px 15px'}}>
+
+        
         <Content
             style={{
-                margin: '0 16px',
+                margin: '0 0px',
             }}
         >
             <Breadcrumb
@@ -24,23 +27,25 @@ const MId = () => {
             </Breadcrumb>
             <div
                 style={{
-                    padding: 24,
                     minHeight: 360,
-                    background: '#bdb499',
+                    background: '#DCE0E5',
                     borderRadius: '20px',
                     border: ' 1px solid rgba(0, 0, 0, 0.3)',
                     display: 'flex',
                     margin: '0px 0px 0px 0'
                 }}
             >
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{ flexGrow: 0   }}>
                     <Grid container columns={{ xs: 6, sm: 8, md: 16 }}>
+                    <div class="container_card">
                         <Home />
+                        </div>
                     </Grid>
                 </Box>
             </div>
 
         </Content >
+        </div>
     )
 }
 

@@ -13,20 +13,11 @@
 .Icon {
     display: flex;
     justify-content: right;
-    width: 30%;
-    
-}
+    width: 15%;}
 
 .middle{
     display: flex;
     justify-content: center;
     align-items: center; 
-    width: 40%;
-}
-
-.logo{
-    display: flex ;
-    width: 30%;
-    justify-content: left;
-
+    width: 85%;
 }

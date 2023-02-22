@@ -85,15 +85,17 @@ const Headers = () => {
     <Header
       style={{
         padding: 0,
-        background: '#3c6894',
-        backgroundColor: '#3c6894',
-        border: ' 1px solid rgba(0, 0, 0, 0.3)',
-        display: 'flex'
+        background: '#D3D8DE',
+        backgroundColor: '#D3D8DE',
+        borderBottom: '2px solid rgba(0, 0, 0, .2)',
+        display: 'flex',
+        position: 'sticky',
+        top: 0,
+        zIndex: 2,
+        width: '100%',
       }}
     >
-      <div className='logo'>
-        <img onClick={() => homeclick()} width='60' src='../image/Logo.png'></img>
-      </div>
+
       <div className='middle'>
         <Search
           placeholder="search"
@@ -101,6 +103,7 @@ const Headers = () => {
           size="large"
           suffix={suffix}
           onSearch={onSearch}
+          style={{width: 'calc(100% / 2 - 20px)'}}
         />
       </div>
       <div className='Icon'>
@@ -111,7 +114,8 @@ const Headers = () => {
             borderRadius: 35,
             margin: '15px 0px 0px 0',
             fontSize: "10px",
-            width: '35%',
+
+            
           }} onClick={link_adress_alert} ghost>
             連接錢包
           </Button> :
