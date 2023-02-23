@@ -1,31 +1,95 @@
-.box{
-    /* border: 2px #7ef0e4 solid; */
+body {
+
+}
+
+.container {
+    position: relative;
+    width: 80%;
+    height: 50vh;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    /* transition: all .3s ease-in; */
+    animation-duration: 0.5s;
+    animation-name: exe;
+}
+@keyframes exe {
+    0%   {height: 2vh;}
+    100% {height: 50vh;}
+  }
+.head {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
-    height: 100%;   
 }
 
-.user {
-    /* border: 2px #5340ac solid; */
-    display: flex;
-    justify-content: center;
-    padding: 1px 2px 10px 10px;
-    flex-wrap: wrap;
-
+.item {
+    position: relative;
+    margin: 0 20px;
+    padding: 10px 20px;
+    /* background-color: #bea174; */
 }
 
-.user1{
-    /* border: 2px #ff1500 solid; */
-    display: flex;
-    justify-content: center;
-
+.item:hover {
+    /* background-color: #7c7f8e; */
+}
+.item::before {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    content: "";
+    height: 4px;
+    width: 0;
+    border-radius: 2px;
+    background-color: #223ab3;
+    transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.item:hover::before {
+    width: 100%;
+}
+.item.active::before {
+    width: 100%;
+}
+/* .item:not(:active)::before {
+    width: 0;
+    transition: width 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+} */
+.item .title {
+    color: #7c7f8e;
+}
+.item:hover .title {
+    color: #000000;
+}
+.item.active .title {
+    color: #000000;
+}
+.cover {
+    position: absolute;
+    top: -50px;
+    left: 20px;
+}
+.cover img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transition: filter 375ms ease-in 0.2s, transform 0.3s;
+}
+.cover:hover img {
+    transform: rotate(360deg);
 }
 
-.user2{
-    /* border: 2px #000000 solid; */
-    display: flex;
-    flex-wrap: wrap;
-    padding: 40px 10px 10px 10px;
+@media screen and (max-width: 768px) {
+    .head {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        justify-content: center;
+    }
+
+    .item {
+        margin: 10px 10px;
+        padding: 5px 10px;
+        /* background-color: #bea174; */
+    }
 }

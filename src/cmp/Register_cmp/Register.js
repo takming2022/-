@@ -50,15 +50,22 @@ const Register = () => {
         newarr[i] = Contract_file_image[0].url
     }
     set_Contract_Room_image(newarr)
-    let ans = await contractInstance_singner.add_Ld_room(Contract_phone, "1", Contract_Room_address, Contract_introduce, Contract_Room_name, Contract_equiment, "1", Contract_file_image, Contract_Room_money, { from: wallet_address, value: amount })
+    let ans = await contractInstance_singner.add_Ld_room(Contract_phone, "1", Contract_Room_address, Contract_introduce, Contract_Room_name, Contract_equiment, "1", newarr, Contract_Room_money, { from: wallet_address, value: amount })
     console.log(ans);
   }
   async function lengtha() {
+    const newarr = [...Contract_file_image]
+    for(let i=0 ; i<Contract_file_image.length;i++){
+        newarr[i] = Contract_file_image[0].url
+    }
+    set_Contract_Room_image(newarr)
+
     let api = await contractInstance_provider.romms_length();
     let ans = parseInt(api._hex, 16)
     console.log(ans);
   }
   async function room() {
+    console.log();
     let api = await contractInstance_provider.romms_length();
     let ans = parseInt(api._hex, 16)
     for (let i = 0; i < ans; i++) {
