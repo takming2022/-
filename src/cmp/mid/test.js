@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card_object } from '../../card_object/Card_object';
 import './test.css';
@@ -7,29 +7,26 @@ import Web3 from 'web3';
 import { address, abi } from '../../Contract/Contract';
 
 const Test = () => {
+    const [aa, setaa] = useState("")
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const signer = provider.getSigner()
     const contractInstance_singner = new ethers.Contract(address, abi, signer);
     //使用singer 連接合約 對合約有可讀寫權限
     const contractInstance_provider = new ethers.Contract(address, abi, provider);
-    var api2 =[]
+    var api2 = []
     const params = useParams();
-    var aa;
-    var bb;
-    var cc ;
-    var dd;
     async function details() {
-        cc = await contractInstance_provider.getroomscard(8);
-        dd = cc[2][0];
-        aa = Card_object.filter(item => item.id == params.id)
-        // bb = aa[2]
-        console.log(dd);
+        setaa(await contractInstance_provider.getroomscard(8))
+        console.log(aa);
+        // aa = Card_object.filter(item => item.id == params.id)
+
     }
-    details()
-    console.log(params.id)
     useEffect(() => {
-        room();
+        details()
     }, [])
+
+    console.log(params.id)
+
     // useEffect(async() => {
     //     room();
     //     api2 =  contractInstance_provider.getroomscard(8);
@@ -48,8 +45,8 @@ const Test = () => {
         <div className='room'>
 
             <div>
-                {/* <img src={dd} className='rrimg' alt='ERROR' /> */}
-                {dd}
+                <img src={aa[2][0]} className='rrimg' alt='ERROR' />
+                {aa}
             </div>
 
             <div className='rname'>
