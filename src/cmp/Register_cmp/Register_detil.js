@@ -13,9 +13,9 @@ import FormControl from '@mui/material/FormControl';
 import Select from 'react-select';
 import { width } from '@mui/system';
 const { TextArea } = Input;
-const Register_detil = ({ set_Contract_equiment, Contract_equiment, set_Contract_phone, Contract_phone,Contract_Room_name,set_Contract_Room_name
-                            ,Contract_Room_address,set_Contract_Room_address,Contract_introduce,set_Contract_introduce
-                            ,set_Contract_Room_money,Contract_Room_money}) => {
+const Register_detil = ({ set_Contract_equiment, Contract_equiment, set_Contract_phone, Contract_phone, Contract_Room_name, set_Contract_Room_name
+    , Contract_Room_address, set_Contract_Room_address, Contract_introduce, set_Contract_introduce
+    , set_Contract_Room_money, Contract_Room_money, Contract_Room_type, set_Contract_Room_type }) => {
     const [chooseItem, setChooseItem] = useState('')
     const [isClearable, setIsClearable] = useState(true);
     const [isSearchable, setIsSearchable] = useState(true);
@@ -70,26 +70,31 @@ const Register_detil = ({ set_Contract_equiment, Contract_equiment, set_Contract
     var wallet_address = ""
     function InputRoomName(e) {
         set_Contract_Room_name(e.target.value)
-        console.log('cr',Contract_Room_name);
+        console.log('cr', Contract_Room_name);
+    }
+    //TODO:
+    function InputRoomType(e) {
+        set_Contract_Room_type(e.value)
+        console.log('ctt', Contract_Room_type);
     }
     function InputLocation(e) {
         set_Contract_Room_address(e.target.value)
-        console.log('ca',Contract_Room_address);
+        console.log('ca', Contract_Room_address);
     }
     function Inputmoney(e) {
         set_Contract_Room_money(e.target.value)
-        console.log('cam',Contract_Room_money);
+        console.log('cam', Contract_Room_money);
     }
     function InputPhone(e) {
         set_Contract_phone(e.target.value)
-        console.log('cp',Contract_phone)
+        console.log('cp', Contract_phone)
     }
     function Inputintroduce(e) {
         set_Contract_introduce(e.target.value)
-        console.log('ci',Contract_introduce);
+        console.log('ci', Contract_introduce);
     }
 
-    async function Login() {  
+    async function Login() {
         const ethereum = window.ethereum;
         var accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         var account = accounts[0];
@@ -148,7 +153,9 @@ const Register_detil = ({ set_Contract_equiment, Contract_equiment, set_Contract
                     options={options}
                     placeholder='請選擇房型'
                     // onChange={(e) => {try{console.log(e.value)}catch(e){};}}
-                    onChange={(e) => {try{}catch(e){};}}
+                    onChange={(e) => {try{InputRoomType(e)}catch(e){};}}
+                    // onChange={InputRoomType()}
+                    // value={Contract_Room_type}
                     styles={{
                         control: (baseStyles, state) => ({
                             ...baseStyles,

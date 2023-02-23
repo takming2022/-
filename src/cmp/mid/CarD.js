@@ -67,9 +67,10 @@ export default function CarD({ id, title, index1, index2, image }) {
             <AccountBookOutlined style={{}} onClick={aaa} />
           </CustomWidthTooltip>
         </div>
-        <div class="btn_card">
+        <div class="btn_card" >
           <CustomWidthTooltip title="查看詳情" >
-            <EllipsisOutlined key="ellipsis" onClick={() => { w(`/room/${id}`); console.log(123); }} />
+            <EllipsisOutlined key="ellipsis"  onClick={() => { w(`/room/${id}`); console.log(123); }}/>
+            
           </CustomWidthTooltip>
         </div>
       </div>
