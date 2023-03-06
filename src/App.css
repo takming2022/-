@@ -1,3 +1,23 @@
-body{
-    background-color: black;
+
+#HeaderActions {
+  position:relative;
+ 
 }
+/* @media screen and (max-width:1312px) {
+  #HeaderActions {
+    position:absolute;
+    left:0;
+    animation-name:oxxo;
+    animation-duration:0.5s; 
+  }
+} */
+/* 關鍵影格(@keyframe) */
+/* @keyframes oxxo{
+  from{
+      left: -300px;
+  }
+  to{
+      left:0px;
+  }
+} */
+

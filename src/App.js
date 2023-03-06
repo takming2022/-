@@ -1,46 +1,52 @@
-import React, { useState } from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import Left from './cmp/left/Left';
-import Headers from './cmp/header/Headers'
-import MId from './cmp/mid/Mid';
-import Fotter from './cmp/Footer/Fotter';
-import Test from './cmp/mid/test';
-import User from './user/user';
-import Checkin from './user/checkin';
-import Reserve from './user/reserve';
-import Tbcomment from './user/tbcomment';
-
+import { useState, useEffect } from 'react';
+import { MantineProvider, ColorSchemeProvider, Drawer } from '@mantine/core';
+import { ActionIcon, useMantineColorScheme } from '@mantine/core';
+import { IconSun, IconMoonStars } from '@tabler/icons';
+import { ColorScheme } from '@mantine/core';
+import { useHotkeys, useLocalStorage } from '@mantine/hooks';
+import Navbars from './Navbar/Navbars';
+import Headers from './Header/Headers';
+import Mid from './Mid/Mid';
+import './App.css'
+import Drawers from './Navbar/Drawers';
 import {
   BrowserRouter as Router,
   Route,
   Routes
 } from 'react-router-dom';
-const App = () => {
+import User_Information from './User_Information/User_Information';
+function App() {
+  const [opend1, setopend1] = useState(false)
+  //控制側邊顯示
+  const [Control_Navbar, Set_Control_Navbar] = useState(false)
+  //控制黑白模式
+  const [colorScheme, setColorScheme] = useLocalStorage({
+    key: 'mantine-color-scheme',
+    defaultValue: 'light',
+    getInitialValueInEffect: true,
+  });
+  const [dark, setdark] = useState(colorScheme);
+  const toggleColorScheme = (value) => {
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'))
+    setdark(value || (colorScheme === 'dark' ? false : true))
+  };
+  useHotkeys([['mod+J', () => toggleColorScheme()]]);
   return (
-    <div>
-      <Layout
-        style={{
-
-          minHeight: '100vh',
-        }}
-      >
-        <Left />
-        <Layout className="site-layout" style={{ backgroundColor: '#E5E8EB',position:'relative' }}>
-          <Headers />
-          <Router>
+    <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+      <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+        <Router>
+          <Headers Set_Control_Navbar={Set_Control_Navbar} setopend1={setopend1} opend1={opend1} />
+          <div style={{ display: 'flex' }}>
+            {window.innerWidth < 1312 ? <Drawers opend1={opend1} setopend1={setopend1}></Drawers> :
+              <>{opend1 ? <Navbars opend1={opend1} setopend1={setopend1} /> : ''}</>}
             <Routes>
-              <Route exact path='/' element={<MId />} />
-              <Route exact path='/room/:id' element={<Test />} />
-              <Route exact path='/user' element={<User/>} />
-              <Route exact path='/checkin' element={<Checkin />}/>
-              <Route exact path='/reserve' element={<Reserve />}/>
-              <Route exact path='/tbcomment' element={<Tbcomment />}/>
+              <Route exact path='/' element={<Mid />} />
+              <Route exact path='/user/account' element={<User_Information />} />
             </Routes>
-          </Router>
-          <Fotter />
-        </Layout>
-      </Layout>
-    </div>
+          </div>
+        </Router>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
-};
+}
 export default App;
