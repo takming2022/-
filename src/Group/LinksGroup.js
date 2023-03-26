@@ -60,64 +60,64 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, linkk })
 
   return (
     <>
-      {linkk != null ? 
-      <>
-        <UnstyledButton onClick={() => { 
-          setOpened((o) => !o)
-          if (linkk == '/') {
-            window.open(linkk,'_self')
-          }else{
-            window.open(linkk)
-          }
-         
-        }
-          } className={classes.control}>
-          <Group position="apart" spacing={0}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ThemeIcon variant="light" size={30}>
-                <Icon size={18} />
-              </ThemeIcon>
-              <Box ml="md">{label}</Box>
-            </Box>
-            {hasLinks && (
-              <ChevronIcon
-                className={classes.chevron}
-                size={14}
-                stroke={1.5}
-                style={{
-                  transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
-                }}
-              />
-            )}
-          </Group>
-        </UnstyledButton>
-        {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
-      </> 
-      : 
-      <>
-        <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
-          <Group position="apart" spacing={0}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <ThemeIcon variant="light" size={30}>
-                <Icon size={18} />
-              </ThemeIcon>
-              <Box ml="md">{label}</Box>
-            </Box>
-            {hasLinks && (
-              <ChevronIcon
-                className={classes.chevron}
-                size={14}
-                stroke={1.5}
-                style={{
-                  transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
-                }}
-              />
-            )}
-          </Group>
-        </UnstyledButton>
-        {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+      {linkk != null ?
+        <>
+          <UnstyledButton onClick={() => {
+            setOpened((o) => !o)
+            if (linkk == '/') {
+              window.open(linkk, '_self')
+            } else {
+              window.open(linkk)
+            }
 
-      </>}
+          }
+          } className={classes.control}>
+            <Group position="apart" spacing={0}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ThemeIcon variant="light" size={30}>
+                  <Icon size={18} />
+                </ThemeIcon>
+                <Box ml="md">{label}</Box>
+              </Box>
+              {hasLinks && (
+                <ChevronIcon
+                  className={classes.chevron}
+                  size={14}
+                  stroke={1.5}
+                  style={{
+                    transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
+                  }}
+                />
+              )}
+            </Group>
+          </UnstyledButton>
+          {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+        </>
+        :
+        <>
+          <UnstyledButton onClick={() => setOpened((o) => !o)} className={classes.control}>
+            <Group position="apart" spacing={0}>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <ThemeIcon variant="light" size={30}>
+                  <Icon size={18} />
+                </ThemeIcon>
+                <Box ml="md">{label}</Box>
+              </Box>
+              {hasLinks && (
+                <ChevronIcon
+                  className={classes.chevron}
+                  size={14}
+                  stroke={1.5}
+                  style={{
+                    transform: opened ? `rotate(${theme.dir === 'rtl' ? -90 : 90}deg)` : 'none',
+                  }}
+                />
+              )}
+            </Group>
+          </UnstyledButton>
+          {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+
+        </>}
     </>
   );
 }

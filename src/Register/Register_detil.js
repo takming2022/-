@@ -139,7 +139,6 @@ const Register_detil = ({ Contract_Room_name, set_Contract_Room_name, set_Contra
         <Checkbox value='spa' label="溫泉" className='chenkboxs' ></Checkbox>
         <Checkbox value='tub' label="浴缸" className='chenkboxs' ></Checkbox>
         <Checkbox value='coffee_shop' label="咖啡店" className='chenkboxs' ></Checkbox>
-        <Checkbox value='restaurant' label="餐廳" className='chenkboxs' ></Checkbox> 
         <Checkbox value='Gym' label="健身房" className='chenkboxs' ></Checkbox>
         </Checkbox.Group></div>
     </div>

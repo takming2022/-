@@ -1,7 +1,26 @@
 export const op_wallet_address = ""
-export const address = '0x687eC715D1E81f15835E3AE72c1BE33bE48A486E'//合約地址
+export const address = '0x5bABF7f0145E18021f481Bd24D75702263E936E6'//合約地址
 export const abi =
 [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Ld_rooms",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
 	{
 		"inputs": [
 			{
@@ -58,9 +77,9 @@ export const abi =
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "id",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"name": "clearroom",
@@ -71,9 +90,9 @@ export const abi =
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
+				"internalType": "string",
 				"name": "id",
-				"type": "uint256"
+				"type": "string"
 			}
 		],
 		"name": "getrooms",
@@ -161,6 +180,24 @@ export const abi =
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getuser_room",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
 			}
 		],
 		"stateMutability": "view",
@@ -174,7 +211,7 @@ export const abi =
 				"type": "uint256"
 			}
 		],
-		"name": "Ld_rooms",
+		"name": "ldlords",
 		"outputs": [
 			{
 				"internalType": "uint256",

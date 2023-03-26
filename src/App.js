@@ -9,12 +9,15 @@ import Headers from './Header/Headers';
 import Mid from './Mid/Mid';
 import './App.css'
 import Drawers from './Navbar/Drawers';
+
 import {
   BrowserRouter as Router,
   Route,
-  Routes
+  Routes,
+ 
 } from 'react-router-dom';
 import User_Information from './User_Information/User_Information';
+import Room_info from './room/Room_info';
 function App() {
   const [opend1, setopend1] = useState(false)
   //控制側邊顯示
@@ -31,6 +34,8 @@ function App() {
     setdark(value || (colorScheme === 'dark' ? false : true))
   };
   useHotkeys([['mod+J', () => toggleColorScheme()]]);
+ 
+  
   return (
     <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
       <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
@@ -41,6 +46,7 @@ function App() {
               <>{opend1 ? <Navbars opend1={opend1} setopend1={setopend1} /> : ''}</>}
             <Routes>
               <Route exact path='/' element={<Mid />} />
+              <Route exact path='/room/:id' element={<Room_info />} />
               <Route exact path='/user/account' element={<User_Information />} />
             </Routes>
           </div>
