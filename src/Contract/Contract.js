@@ -1,26 +1,7 @@
 export const op_wallet_address = ""
-export const address = '0x5bABF7f0145E18021f481Bd24D75702263E936E6'//合約地址
+export const address = '0x6Bc26a3dF60bfe61A9Ac376eEE515Ec3Aa99fE1b'//合約地址
 export const abi =
 [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "Ld_rooms",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
 	{
 		"inputs": [
 			{
@@ -78,6 +59,54 @@ export const abi =
 		"inputs": [
 			{
 				"internalType": "string",
+				"name": "order_uiud",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Room_uuid",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "money",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "room_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Room_address",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "Ld_wallet_address",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestamp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "timestampend",
+				"type": "uint256"
+			}
+		],
+		"name": "add_order",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
 				"name": "id",
 				"type": "string"
 			}
@@ -85,6 +114,78 @@ export const abi =
 		"name": "clearroom",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getorder_id",
+		"outputs": [
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "order_id",
+				"type": "string"
+			}
+		],
+		"name": "getordersInfo",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -211,7 +312,45 @@ export const abi =
 				"type": "uint256"
 			}
 		],
+		"name": "Ld_rooms",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
 		"name": "ldlords",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "Order_arr",
 		"outputs": [
 			{
 				"internalType": "uint256",

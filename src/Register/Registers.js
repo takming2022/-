@@ -55,7 +55,9 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
     for (let i = 0; i < files.length; i++) {
       newarr[i] = files[0].url
     }
-    await contractInstance_singner.add_Ld_room(Contract_phone, Contract_Room_type.toString(), Contract_Room_address, Contract_introduce, Contract_Room_name, Contract_equiment, uuidv4(), newarr, Contract_Room_money.toString(), { from: wallet_address, value: amount })
+    await contractInstance_singner.add_Ld_room(Contract_phone, Contract_Room_type.toString(), 
+                                                Contract_Room_address, Contract_introduce, Contract_Room_name, Contract_equiment, 
+                                                uuidv4(), newarr, Contract_Room_money.toString(), { from: wallet_address, value: amount })
       .then((e) => SetOpen_Register(false))
       .catch((e) => {
         window.alert('請按確認')  

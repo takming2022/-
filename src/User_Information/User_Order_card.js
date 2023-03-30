@@ -6,7 +6,8 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import { Button } from "@mantine/core";
 import { createStyles, Tabs, ActionIcon, Paper, Text } from "@mantine/core";
-const User_info_card = ({ room_id }) => {
+import moment from "moment/moment";
+const User_Order_card = ({ order_id }) => {
   const useStyles = createStyles((theme) => ({
     paper: {
       background:
@@ -48,15 +49,16 @@ const User_info_card = ({ room_id }) => {
 
   const [Contract_Room_wallet_addr, set_Contract_Room_wallet_addr] =
     useState("");
-  const [Contract_phone, set_Contract_phone] = useState("");
-  const [Contract_Room_type, set_Contract_Room_type] = useState(0);
+  const [order_uuid, set_order_uuid] = useState("");
+  const [room_uuid, set_room_uuid] = useState(0);
   const [Contract_Room_address, set_Contract_Room_address] = useState("");
-  const [Contract_introduce, set_Contract_introduce] = useState(""); //房間描述
   const [Contract_Room_name, set_Contract_Room_name] = useState("");
-  const [Contract_equiment, set_Contract_equiment] = useState([]); //各種配件
-  const [Contract_image_files, set_Contract_image_files] = useState([]);
   const [Contract_Room_money, set_Contract_Room_money] = useState(0);
-
+  const [timestempStart, set_timestempStart] = useState(0);
+  const [timestempEnd, set_timestempEnd] = useState(0);
+  const [User_wallet_address, set_User_wallet_address] = useState("v");
+  const [Order_time_start, set_Order_time_start] = useState("")
+  const [Order_time_end, set_Order_time_end] = useState("")
   function hidden(str) {
     return str.substring(0, 6) + "...." + str.substring(str.length - 4);
   }
@@ -71,18 +73,29 @@ const User_info_card = ({ room_id }) => {
       provider
     );
 
-    let api = await contractInstance_provider.getrooms(room_id);
-    set_Contract_Room_wallet_addr(api[0]);
-    set_Contract_phone(api[1]);
-    set_Contract_Room_type(api[2]);
-    set_Contract_Room_address(api[3]);
-    set_Contract_introduce(api[4]);
-    set_Contract_Room_name(api[5]);
-    set_Contract_equiment(api[6]);
-    set_Contract_image_files(api[8][0]);
-    set_Contract_Room_money(api[9]);
+    let api = await contractInstance_provider.getordersInfo(order_id);
+    console.log("dfasdffd", api);
+    console.log(api[6]);
+    set_order_uuid(api[0]);
+    set_room_uuid(api[1]);
+    set_User_wallet_address(api[2])
+    set_Contract_Room_money(api[3]);
+    set_Contract_Room_name(api[4]);
+    set_Contract_Room_address(api[5]);
+    set_Contract_Room_wallet_addr(api[6]);
+    set_timestempStart(api[7]);
+    set_timestempEnd(api[8]);
     console.log(api);
-
+    const time_start = moment(new Date(Number(api[7]) * 1000).toString()).format('YYYY年M月D日H點m分')
+    const time_end = moment(new Date(Number(api[8]) * 1000).toString()).format('YYYY年M月D日H點m分')
+    set_Order_time_start(time_start)
+    set_Order_time_end(time_end)
+    // var wallet_address;
+    // const ether_accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+    // var account = ether_accounts[0];
+    // wallet_address = account;
+    // let apii = await contractInstance_provider.getorder_id({ from: wallet_address });
+    // console.log(apii);
   }
   async function clearRoom() {
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -102,15 +115,11 @@ const User_info_card = ({ room_id }) => {
     wallet_address = account;
 
     let amount = Web3.utils.toWei("0.0001");
-    await contractInstance_singner
-      .clearroom(room_id, { from: wallet_address, value: amount })
-      .then((res) => {
-        window.alert("刪除成功 請等待合約互動");
-      })
-      .catch((e) => window.alert("刪除失敗"));
+
   }
   useEffect(() => {
     get_user_room_info();
+    console.log(1);
   }, []);
 
   return (
@@ -120,14 +129,7 @@ const User_info_card = ({ room_id }) => {
       <p></p>
       <div className={classes.userCardcontener}>
         <div style={{ display: "flex" }}>
-          <div style={{ width: "30%", height: "100px" }}>
-            <img
-              className={classes.roomImg_user}
-              src={Contract_image_files}
-              alt=""
-            ></img>
-          </div>
-          <div style={{ width: "60%" }}>
+          <div style={{ width: "100%" }}>
             <Paper className={classes.paper}>
               <Text style={{ textAlign: "center" }}>
                 房間名稱:{Contract_Room_name}
@@ -136,18 +138,12 @@ const User_info_card = ({ room_id }) => {
               <Text style={{ textAlign: "center" }}>
                 刊登者:{hidden(Contract_Room_wallet_addr)}
               </Text>
+              <Text style={{ textAlign: "center" }}>
+                入住時間:{Order_time_start} ~ 退房時間:{Order_time_end}
+              </Text>
             </Paper>
           </div>
-          <div style={{ width: "10%" }}>
-            <Button
-              color="red"
-              radius="xs"
-              className={classes.deleteButton}
-              onClick={clearRoom}
-            >
-              刪除
-            </Button>
-          </div>
+
         </div>
       </div>
       <p></p>
@@ -155,4 +151,4 @@ const User_info_card = ({ room_id }) => {
   );
 };
 
-export default User_info_card;
+export default User_Order_card;

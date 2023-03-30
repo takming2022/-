@@ -7,6 +7,7 @@ import User_info_card from "./User_info_card";
 import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import { Button } from "@mantine/core";
+import User_Order_card from "./User_Order_card";
 const useStyles = createStyles((theme) => ({
   Tab: {
     border:
@@ -77,7 +78,9 @@ const User_Information = () => {
   const [Account_image, setAccount_image] = useState("");
   const [Account, setAccount] = useState("");
   const [roomlist, setRoomlist] = useState(false);
+  const [room_order_list, setroom_order_list] = useState(false);
   const [User_room_list, setUser_room_list] = useState([]);
+  const [User_order_list, setUser_order_list] = useState([]);
   const { classes } = useStyles();
   useEffect(() => {
     MateMask_account();
@@ -101,9 +104,20 @@ const User_Information = () => {
       provider
     );
 
-    let user_room_id = await contractInstance_provider.getuser_room({
-      from: wallet_address,
-    });
+
+    let user_order_id = await contractInstance_provider.getorder_id({ from: wallet_address });
+    let user_order_arr = [];
+    if (user_order_id.length === 0) {
+      setroom_order_list(false);
+    } else {
+      for (let index = 0; index < user_order_id.length; index++) {
+        user_order_arr[index] = <User_Order_card order_id={user_order_id[index]} />;
+      }
+      setUser_order_list(user_order_arr);
+      setroom_order_list(true);
+    }  
+    console.log(user_order_id);
+    let user_room_id = await contractInstance_provider.getuser_room({from: wallet_address});
     let user_room_arr = [];
     if (user_room_id.length === 0) {
       setRoomlist(false);
@@ -171,7 +185,7 @@ const User_Information = () => {
           </Tabs.List>
 
           <Tabs.Panel value="first" pt="xs">
-            預定(無)
+            {room_order_list ? User_order_list :"預定(無)"} 
           </Tabs.Panel>
 
           <Tabs.Panel value="second" pt="xs">
