@@ -7,6 +7,7 @@ import { Image } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { abi, address } from '../Contract/Contract';
 import { ethers } from 'ethers';
+import { TurnedIn } from '@mui/icons-material';
 const child = <Skeleton height={140} radius="md" animate={false} />;
 const useStyles = createStyles((theme) => ({
     root: {
@@ -22,6 +23,7 @@ const useStyles = createStyles((theme) => ({
     }
 }));
 const Mid = () => {
+    const [loading, setLoading] = useState(true);
     const history = useNavigate()
     const [usewidth, setusewidth] = useState(window.innerWidth)
     const { classes } = useStyles();
@@ -58,7 +60,7 @@ const Mid = () => {
         }
 
         setCardList(room_arr)
-
+        setLoading(false)
 
     }
     function hidden(str) {
@@ -85,9 +87,9 @@ const Mid = () => {
                     </Carousel.Slide>
                 </Carousel>
             </div>
-            
+
             <div className='container'>
-                {CardList}
+                {loading ? <Skeleton height="50vh" visible={true}></Skeleton> :<>{CardList}</>}
             </div>
         </div>
     )

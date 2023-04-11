@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
       borderRadius:'20px'
     },
     link2: {
-      [theme.fn.largerThan('606')]: {
+      [theme.fn.largerThan('605')]: {
         display:'none'
       },
       borderRadius:'50%',

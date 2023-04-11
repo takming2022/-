@@ -8,6 +8,9 @@ import {
   Autocomplete,
   Stepper,
   NumberInput,
+  Container,
+  Space,
+  Divider
 } from "@mantine/core";
 import { IconAt } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
@@ -15,6 +18,7 @@ import { ethers } from "ethers";
 import Web3 from "web3";
 import emailjs from "@emailjs/browser";
 import { abi, address } from "../Contract/Contract";
+import moment from "moment/moment";
 const Check_Order = ({
   Open_Order,
   setOpen_Order,
@@ -32,7 +36,7 @@ const Check_Order = ({
   const [theemailCheck, settheemailCheck] = useState();
   const [buttoncheck, setbuttoncheck] = useState(false);
 
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const nextStep = () => {
     if (active == 0) {
       sendEmail();
@@ -50,8 +54,8 @@ const Check_Order = ({
   const data =
     theEmail.trim().length > 0 && !theEmail.includes("@")
       ? ["gmail.com", "outlook.com", "yahoo.com"].map(
-          (provider) => `${theEmail}@${provider}`
-        )
+        (provider) => `${theEmail}@${provider}`
+      )
       : [];
   const Chenck_order_time_start = new Date(datestart_ans).toString();
   const Chenck_order_time_End = new Date(datesEnd_ans).toString();
@@ -97,7 +101,7 @@ const Check_Order = ({
           setverification_email("");
           settheEmail("");
           settheemailCheck("");
-          
+
         } else {
           window.alert("驗證碼錯誤");
         }
@@ -149,6 +153,8 @@ const Check_Order = ({
       size={window.innerWidth > 800 ? "60%" : "100%"}
       opened={Open_Order}
       onClose={() => {
+        setbuttoncheck(false)
+        setActive(0)
         setOpen_Order((o) => !o);
       }}
       title="刊登房間"
@@ -179,20 +185,25 @@ const Check_Order = ({
                   <th>房間價格: {Contract_Room_money}</th>
                 </tr>
                 <tr>
-                  <th>入住時間: {Chenck_order_time_start}</th>
+                  <th>入住時間: {moment(Chenck_order_time_start).format("YYYY年M月D日H點m分")}</th>
                 </tr>
                 <tr>
-                  <th>退房時間: {Chenck_order_time_End}</th>
+                  <th>退房時間: {moment(Chenck_order_time_End).format("YYYY年M月D日H點m分")}</th>
                 </tr>
               </tbody>
-              <Group position="center" mt="xl">
+              <Space h="md" />
+              <Divider my="xs" label="pls type ur Email" labelPosition="center" />
+              <Container size="50rem" px={0}>
                 <Autocomplete
+                  size="md"
+                  radius="xl"
                   value={theEmail}
                   onChange={settheEmail}
                   placeholder="pls type ur Email"
                   data={data}
                 />
-              </Group>
+              </Container>
+
               <Group position="center" mt="xl"></Group>
             </Table>
           </Stepper.Step>
@@ -232,9 +243,9 @@ const Check_Order = ({
           ) : (
             <>
               {buttoncheck ? (
-                <Button onClick={nextStep}>確定刊登</Button>
+                <Button onClick={nextStep}>確定訂房</Button>
               ) : (
-                <Button disabled>確定刊登</Button>
+                <Button disabled>確定訂房</Button>
               )}
             </>
           )}

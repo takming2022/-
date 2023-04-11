@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import Web3 from "web3";
-import { IconHome2 } from '@tabler/icons-react';
 import { createStyles, Tabs, ActionIcon, Paper,Group, Avatar, Text, Accordion,Table } from "@mantine/core";
 import moment from "moment/moment";
+import { IconHome2 } from '@tabler/icons-react';
 const User_Order_card = ({ order_id }) => {
   const useStyles = createStyles((theme) => ({
     paper: {
@@ -59,6 +59,7 @@ const User_Order_card = ({ order_id }) => {
   const [User_wallet_address, set_User_wallet_address] = useState("v");
   const [Order_time_start, set_Order_time_start] = useState("");
   const [Order_time_end, set_Order_time_end] = useState("");
+  const [Order_controller, set_Order_controller] = useState(false)
   function hidden(str) {
     return str.substring(0, 6) + "...." + str.substring(str.length - 4);
   }
@@ -94,6 +95,11 @@ const User_Order_card = ({ order_id }) => {
     );
     set_Order_time_start(time_start);
     set_Order_time_end(time_end);
+    if (Number(api[8]) * 1000 >  Date.now()) {
+      set_Order_controller(true)
+  } else {
+    set_Order_controller(false)
+  }
     // var wallet_address;
     // const ether_accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
     // var account = ether_accounts[0];
@@ -133,54 +139,56 @@ const User_Order_card = ({ order_id }) => {
   return (
     //TODO:注意這個地方要換一張卡片樣式  改成橫條 
     <>
-    <Accordion  chevronPosition="right" variant="contained">
-      <Accordion.Item value="{order_uuid}" >
-        <Accordion.Control>
-          <Group noWrap>
-            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdK-5VBYxCXQFBQ11uCi7DSO8sG8UAP2g3aG75vuc&s"  size="lg" />
-            <div>
-              <Text>{Contract_Room_name}</Text>
-              <Text size="sm" color="dimmed" weight={400}>
-                {Contract_Room_address}
-              </Text>
-            </div>
-          </Group>
-        </Accordion.Control>
-        <Accordion.Panel>
-        
-            <Table withBorder striped >
-                <thead>
-                    <tr>
-                        <th style={{ textAlign: 'center' }}>房間資訊</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>房間名稱: {Contract_Room_name}</th>
-                    </tr>
-                    <tr>
-                        <th>房間地址: {Contract_Room_address}</th>
-                    </tr>
-                    <tr>
-                        <th>房間價格: {Contract_Room_money}</th>
-                    </tr>
-                    <tr>
-                        <th>入住時間: {Order_time_start}</th>
-                    </tr>
-                    <tr>
-                        <th>退房時間: {Order_time_end}</th>
-                    </tr>
-                </tbody>
-               
-            </Table>
-       
-        </Accordion.Panel>
-      </Accordion.Item>
-    </Accordion>
-    <p></p>
-    
-    
-   </>
+    {Order_controller ? <>
+        <Accordion chevronPosition="right" variant="contained">
+            <Accordion.Item value="{order_uuid}" >
+                <Accordion.Control>
+                    <Group noWrap>
+                       <IconHome2  size="3rem"/>
+                        <div>
+                            <Text>{Contract_Room_name}</Text>
+                            <Text size="sm" color="dimmed" weight={400}>
+                                {Contract_Room_address}
+                            </Text>
+                        </div>
+                    </Group>
+                </Accordion.Control>
+                <Accordion.Panel>
+
+                    <Table withBorder striped radius="md">
+                        <thead>
+                            <tr>
+                                <th style={{ textAlign: 'center' }}>房間資訊</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>房間名稱: {Contract_Room_name}</th>
+                            </tr>
+                            <tr>
+                                <th>房間地址: {Contract_Room_address}</th>
+                            </tr>
+                            <tr>
+                                <th>房間價格: {Contract_Room_money}</th>
+                            </tr>
+                            <tr>
+                                <th>入住時間: {Order_time_start}</th>
+                            </tr>
+                            <tr>
+                                <th>退房時間: {Order_time_end}</th>
+                            </tr>
+                        </tbody>
+
+                    </Table>
+
+                </Accordion.Panel>
+            </Accordion.Item>
+        </Accordion>
+        <p></p></> : <></>}
+
+
+
+</>
    
     // <>
     //   <p></p>

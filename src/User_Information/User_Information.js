@@ -8,6 +8,7 @@ import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import { Button } from "@mantine/core";
 import User_Order_card from "./User_Order_card";
+import User_evaluate_card from "./User_evaluate_card";
 const useStyles = createStyles((theme) => ({
   Tab: {
     border:
@@ -79,8 +80,10 @@ const User_Information = () => {
   const [Account, setAccount] = useState("");
   const [roomlist, setRoomlist] = useState(false);
   const [room_order_list, setroom_order_list] = useState(false);
+  const [room_evaluate_list, setroom_evaluate_list] = useState(false);
   const [User_room_list, setUser_room_list] = useState([]);
   const [User_order_list, setUser_order_list] = useState([]);
+  const [User_evaluate_list, setUser_evaluate_list] = useState([]);
   const { classes } = useStyles();
   useEffect(() => {
     MateMask_account();
@@ -116,6 +119,16 @@ const User_Information = () => {
       setUser_order_list(user_order_arr);
       setroom_order_list(true);
     }  
+    let user_evaluate_arr = [];
+    if (user_order_id.length === 0) {
+      setroom_evaluate_list(false);
+    } else {
+      for (let index = 0; index < user_order_id.length; index++) {
+        user_evaluate_arr[index] = <User_evaluate_card order_id={user_order_id[index]} />;
+      }
+      setUser_evaluate_list(user_evaluate_arr);
+      setroom_evaluate_list(true);
+    } 
     console.log(user_order_id);
     let user_room_id = await contractInstance_provider.getuser_room({from: wallet_address});
     let user_room_arr = [];
@@ -128,6 +141,7 @@ const User_Information = () => {
       setUser_room_list(user_room_arr);
       setRoomlist(true);
     }
+    
   }
   async function MateMask_account() {
     var wallet_address;
@@ -179,7 +193,7 @@ const User_Information = () => {
             <Tabs.Tab value="second" color="blue">
               訂房未評價
             </Tabs.Tab>
-            <Tabs.Tab value="three" color="blue">
+            <Tabs.Tab value="three" color="red">
               房間已刊登
             </Tabs.Tab>
           </Tabs.List>
@@ -189,7 +203,7 @@ const User_Information = () => {
           </Tabs.Panel>
 
           <Tabs.Panel value="second" pt="xs">
-            評價(無)
+          {room_evaluate_list ? User_evaluate_list :"評價(無)"} 
           </Tabs.Panel>
           <Tabs.Panel value="three" pt="xs">
             {roomlist ? User_room_list : "刊登(無)"}

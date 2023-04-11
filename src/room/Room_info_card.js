@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../Mid/Mid.css";
-import { createStyles, Image, Button } from "@mantine/core";
+import { createStyles, Image, Button,Skeleton } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import {
   CarOutlined,
   WifiOutlined,
   FireOutlined,
   CoffeeOutlined,
+  
 } from "@ant-design/icons";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -177,7 +178,7 @@ const useStyles = createStyles((theme) => ({
 function Room_info_card() {
   //底下取得當前網址
   const location = useLocation();
-
+  const [loading, setLoading] = useState(true);
   //
   const [usewidth, setusewidth] = useState(window.innerWidth);
   const { classes } = useStyles();
@@ -238,6 +239,7 @@ function Room_info_card() {
     console.log(image_files);
     // console.log(equiment_false);
     getSlider_Card(image_files);
+    setLoading(false)
   }
   {
     /*//TODO:有時間把Slider_Card寫成一個元件(MAP)*/
@@ -345,7 +347,8 @@ function Room_info_card() {
           </Carousel>
         </div>
       </div>
-      <div className={classes.reserveMain}>
+      
+      {loading ? <Skeleton height="50vh" visible={true}></Skeleton>:<><div className={classes.reserveMain}>
         <div className={classes.reservediv}>
         <div className={classes.reserveLeft}>
             {/*left*/}
@@ -528,7 +531,8 @@ function Room_info_card() {
                 Contract_Room_name={Contract_Room_name} Contract_Room_address={Contract_Room_address}
                 Contract_Room_wallet_addr={Contract_Room_wallet_addr}/>
         </div>
-      </div>
+        
+      </div></>}
     </div>
   );
 }
