@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import Web3 from "web3";
-import { Button } from "@mantine/core";
-import { createStyles, Tabs, ActionIcon, Paper, Text } from "@mantine/core";
+import { IconHome2 } from '@tabler/icons-react';
+import { createStyles, Tabs, ActionIcon, Paper,Group, Avatar, Text, Accordion,Table } from "@mantine/core";
 import moment from "moment/moment";
 const User_Order_card = ({ order_id }) => {
   const useStyles = createStyles((theme) => ({
@@ -57,8 +57,8 @@ const User_Order_card = ({ order_id }) => {
   const [timestempStart, set_timestempStart] = useState(0);
   const [timestempEnd, set_timestempEnd] = useState(0);
   const [User_wallet_address, set_User_wallet_address] = useState("v");
-  const [Order_time_start, set_Order_time_start] = useState("")
-  const [Order_time_end, set_Order_time_end] = useState("")
+  const [Order_time_start, set_Order_time_start] = useState("");
+  const [Order_time_end, set_Order_time_end] = useState("");
   function hidden(str) {
     return str.substring(0, 6) + "...." + str.substring(str.length - 4);
   }
@@ -78,7 +78,7 @@ const User_Order_card = ({ order_id }) => {
     console.log(api[6]);
     set_order_uuid(api[0]);
     set_room_uuid(api[1]);
-    set_User_wallet_address(api[2])
+    set_User_wallet_address(api[2]);
     set_Contract_Room_money(api[3]);
     set_Contract_Room_name(api[4]);
     set_Contract_Room_address(api[5]);
@@ -86,10 +86,14 @@ const User_Order_card = ({ order_id }) => {
     set_timestempStart(api[7]);
     set_timestempEnd(api[8]);
     console.log(api);
-    const time_start = moment(new Date(Number(api[7]) * 1000).toString()).format('YYYY年M月D日H點m分')
-    const time_end = moment(new Date(Number(api[8]) * 1000).toString()).format('YYYY年M月D日H點m分')
-    set_Order_time_start(time_start)
-    set_Order_time_end(time_end)
+    const time_start = moment(
+      new Date(Number(api[7]) * 1000).toString()
+    ).format("YYYY年M月D日H點m分");
+    const time_end = moment(new Date(Number(api[8]) * 1000).toString()).format(
+      "YYYY年M月D日H點m分"
+    );
+    set_Order_time_start(time_start);
+    set_Order_time_end(time_end);
     // var wallet_address;
     // const ether_accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
     // var account = ether_accounts[0];
@@ -115,39 +119,91 @@ const User_Order_card = ({ order_id }) => {
     wallet_address = account;
 
     let amount = Web3.utils.toWei("0.0001");
-
   }
   useEffect(() => {
     get_user_room_info();
     console.log(1);
   }, []);
+  //
+ 
 
+  
+
+  //
   return (
-    //TODO:注意這個地方要換一張卡片樣式  改成橫條
-
+    //TODO:注意這個地方要換一張卡片樣式  改成橫條 
     <>
-      <p></p>
-      <div className={classes.userCardcontener}>
-        <div style={{ display: "flex" }}>
-          <div style={{ width: "100%" }}>
-            <Paper className={classes.paper}>
-              <Text style={{ textAlign: "center" }}>
-                房間名稱:{Contract_Room_name}
+    <Accordion  chevronPosition="right" variant="contained">
+      <Accordion.Item value="{order_uuid}" >
+        <Accordion.Control>
+          <Group noWrap>
+            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdK-5VBYxCXQFBQ11uCi7DSO8sG8UAP2g3aG75vuc&s"  size="lg" />
+            <div>
+              <Text>{Contract_Room_name}</Text>
+              <Text size="sm" color="dimmed" weight={400}>
+                {Contract_Room_address}
               </Text>
-              <p></p>
-              <Text style={{ textAlign: "center" }}>
-                刊登者:{hidden(Contract_Room_wallet_addr)}
-              </Text>
-              <Text style={{ textAlign: "center" }}>
-                入住時間:{Order_time_start} ~ 退房時間:{Order_time_end}
-              </Text>
-            </Paper>
-          </div>
-
-        </div>
-      </div>
-      <p></p>
-    </>
+            </div>
+          </Group>
+        </Accordion.Control>
+        <Accordion.Panel>
+        
+            <Table withBorder striped >
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: 'center' }}>房間資訊</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>房間名稱: {Contract_Room_name}</th>
+                    </tr>
+                    <tr>
+                        <th>房間地址: {Contract_Room_address}</th>
+                    </tr>
+                    <tr>
+                        <th>房間價格: {Contract_Room_money}</th>
+                    </tr>
+                    <tr>
+                        <th>入住時間: {Order_time_start}</th>
+                    </tr>
+                    <tr>
+                        <th>退房時間: {Order_time_end}</th>
+                    </tr>
+                </tbody>
+               
+            </Table>
+       
+        </Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
+    <p></p>
+    
+    
+   </>
+   
+    // <>
+    //   <p></p>
+    //   <div className={classes.userCardcontener}>
+    //     <div style={{ display: "flex" }}>
+    //       <div style={{ width: "100%" }}>
+    //         <Paper className={classes.paper}>
+    //           <Text style={{ textAlign: "center" }}>
+    //             房間名稱:{Contract_Room_name}
+    //           </Text>
+    //           <p></p>
+    //           <Text style={{ textAlign: "center" }}>
+    //             刊登者:{hidden(Contract_Room_wallet_addr)}
+    //           </Text>
+    //           <Text style={{ textAlign: "center" }}>
+    //             入住時間:{Order_time_start} ~ 退房時間:{Order_time_end}
+    //           </Text>
+    //         </Paper>
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <p></p>
+    // </>
   );
 };
 
