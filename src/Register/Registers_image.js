@@ -6,14 +6,14 @@ const Registers_image =({files,setFiles}) => {
   const openRef = useRef(null);
   async function ipfsupload(file)  {
     console.log(file);
-    var ipfs = create(new URL("http://127.0.0.1:5001"));
+    var ipfs = create(new URL("http://192.192.140.228:5001"));
     // upload files
     const result = await ipfs.add(file);
     // console.log(result);
     // console.log(result.cid);
     // console.log(result.path);
     const url =result.path
-    file['url'] = "http://127.0.0.1:8081/ipfs/"+url;
+    file['url'] = "http://192.192.140.228:8080/ipfs/"+url;
     console.log(file);
     setFiles((prev) => {
       let newFiles = [...prev];

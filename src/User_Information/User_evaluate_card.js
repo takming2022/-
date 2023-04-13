@@ -162,11 +162,11 @@ const User_evaluate_card = ({ order_id }) => {
                                 onClick={clearRoom}
                             >
                                 評論
-                            </Button>
+                            </Button>   
                         </div>
                     </div>
                 </div>
-                <User_evaluate_modal opened={opened} setopened={setopened} Contract_Room_name={Contract_Room_name}/>
+                <User_evaluate_modal opened={opened} setopened={setopened} room_uuid={room_uuid} Contract_Room_name={Contract_Room_name}/>
                 <p></p>
             </> : <></>}
         </>

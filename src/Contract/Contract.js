@@ -1,5 +1,5 @@
 export const op_wallet_address = ""
-export const address = '0x6Bc26a3dF60bfe61A9Ac376eEE515Ec3Aa99fE1b'//合約地址
+export const address = '0xB216777Fc8a37b025F5641ca3cD9DE7B17a71c25'//合約地址
 export const abi =
 [
 	{
@@ -114,6 +114,48 @@ export const abi =
 		"name": "clearroom",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "Room_Comment",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "Room_uuid",
+				"type": "string"
+			}
+		],
+		"name": "doComment",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "Room_uuid",
+				"type": "string"
+			}
+		],
+		"name": "getComment",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"internalType": "string[]",
+				"name": "",
+				"type": "string[]"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from "react";
+import { jsNumberForAddress } from "react-jazzicon";
+import Jazzicon from "react-jazzicon/dist/Jazzicon";
+import { IconCircleCheck, IconCircleDashed } from "@tabler/icons-react";
 import "../Mid/Mid.css";
-import { createStyles, Image, Button,Skeleton } from "@mantine/core";
+import {
+  createStyles,
+  Image,
+  Button,
+  Skeleton,
+  List,
+  ThemeIcon,
+  ScrollArea,
+  Divider,
+} from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import {
   CarOutlined,
   WifiOutlined,
   FireOutlined,
   CoffeeOutlined,
-  
 } from "@ant-design/icons";
 import BathtubIcon from "@mui/icons-material/Bathtub";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
@@ -15,6 +26,7 @@ import { useLocation } from "react-router-dom";
 import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import Order from "../Order/Order";
+import Room_comment from "./Room_comment";
 const useStyles = createStyles((theme) => ({
   root: {
     backgroundColor:
@@ -36,27 +48,35 @@ const useStyles = createStyles((theme) => ({
         : "1px solid #EDEFF2",
     width: "100%",
   },
-  reservediv:{
+  reservediv: {
     display: "flex",
     width: "55%",
     marginRight: "20px",
     justifyContent: "center",
     border:
-    theme.colorScheme === "dark"
-      ? "1px solid #EDEFF2"
-      : "1px solid " + theme.colors.dark[7],
-      borderRadius:"20px",
-      [theme.fn.smallerThan('1024')]: {
-        width: "100%",
-        marginRight: "0px",
-      },
+      theme.colorScheme === "dark"
+        ? "1px solid #EDEFF2"
+        : "1px solid " + theme.colors.dark[7],
+    borderRadius: "20px",
+    [theme.fn.smallerThan("1024")]: {
+      width: "100%",
+      marginRight: "0px",
+    },
   },
   reserveMain: {
-    display: "flex",  justifyContent: "center",  height: "70%",marginTop:"10px", alignItems: "center",
-      [theme.fn.smallerThan('1024')]: {
-      display: "flex", height: "75%",flexDirection:"column",marginTop:"10px"
+    display: "flex",
+    justifyContent: "center",
+    height: "70%",
+    marginTop: "5vh",
+    alignItems: "center",
+    marginBottom:"10vh",
+    [theme.fn.smallerThan("1024")]: {
+      display: "flex",
+      height: "75%",
+      flexDirection: "column",
+      marginTop: "10vh",
+      marginBottom:"10vh"
     },
-
   },
   reserveLeft: {
     // border: '1px solid white',
@@ -81,7 +101,7 @@ const useStyles = createStyles((theme) => ({
     letterSpacing: "3.76px",
     fontWeight: "700",
     fontFamily: "NotoSansTC-Medium,Noto Sans TC,sans-serif",
-    width: "50%",
+    width: "100%",
     wordWrap: "break-word",
   },
   roomBasicDescription: {
@@ -118,7 +138,7 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-around",
     alignItems: "center",
     flexWrap: "wrap",
-    marginBottom: "10vh",
+    marginBottom: "5vh",
     borderRadius: "20px",
   },
   roomIcon: {
@@ -159,23 +179,31 @@ const useStyles = createStyles((theme) => ({
     // justifyContent: 'flex-end',
   },
 
-  Orderdiv:{
+  Orderdiv: {
     border:
       theme.colorScheme === "dark"
         ? "1px solid #EDEFF2"
         : "1px solid " + theme.colors.dark[7],
-      display:"flex",
-      width: "25%",
-      justifyContent:"center",
-      flexDirection:"column",
-      borderRadius:"20px",
-      [theme.fn.smallerThan('1024')]: {
-        marginTop:"10px",
-        width: "100%",
-      },
-  }
+    display: "flex",
+    width: "25%",
+    justifyContent: "center",
+    flexDirection: "column",
+    borderRadius: "20px",
+    [theme.fn.smallerThan("1024")]: {
+      marginTop: "10px",
+      width: "100%",
+    },
+  },
+  listbackcolor: {
+    backgroundColor:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : "rgba(16 18 27 / 20%)",
+    borderRadius: "20px",
+    padding: "10px",
+  },
 }));
-function Room_info_card() {
+function Room_info_card({ theroom_comment, comment_User }) {
   //底下取得當前網址
   const location = useLocation();
   const [loading, setLoading] = useState(true);
@@ -183,7 +211,8 @@ function Room_info_card() {
   const [usewidth, setusewidth] = useState(window.innerWidth);
   const { classes } = useStyles();
   //
-  const [Contract_Room_wallet_addr, set_Contract_Room_wallet_addr] =useState("");
+  const [Contract_Room_wallet_addr, set_Contract_Room_wallet_addr] =
+    useState("");
   const [Contract_phone, set_Contract_phone] = useState("");
   const [Contract_Room_type, set_Contract_Room_type] = useState(0);
   const [Contract_Room_address, set_Contract_Room_address] = useState("");
@@ -193,12 +222,26 @@ function Room_info_card() {
   const [Contract_equimentfulse, set_Contract_equimentfulse] = useState([]); //各種配件的沒勾選版本
   const [Contract_image_files, set_Contract_image_files] = useState([]);
   const [Contract_Room_money, set_Contract_Room_money] = useState(0);
-  const [openorder, setopenorder] = useState(false)
+  const [openorder, setopenorder] = useState(false);
   const [SliderList, setSliderList] = useState([]);
-  const [room_uuid_for_order, setroom_uuid_for_order] = useState()
+  const [room_uuid_for_order, setroom_uuid_for_order] = useState();
+  const [are_room_null, setare_room_null] = useState(false);
+  const [room_comment_compo, setroom_comment_compo] = useState([]);
 
-  async function open_Order() {
-
+  async function getRoomComment(contractInstance_provider, uuid_room) {
+    let api = await contractInstance_provider.getComment(uuid_room);
+    let room_comment_arr = [];
+    if (api[0] =="") {
+      setare_room_null(true)
+    }else{
+      // console.log(api[0] == "")
+      api[0].map((element, index) => {
+        room_comment_arr[index] = (
+          <Room_comment theroom_comment={api[1][index]} comment_User={element} />
+        );
+      });
+      setroom_comment_compo(room_comment_arr);
+    }
   }
   async function getRoomInfo() {
     const allequiment = [
@@ -220,7 +263,7 @@ function Room_info_card() {
     );
     const uuid_room = location.pathname.substring("/user/".length);
     let api = await contractInstance_provider.getrooms(uuid_room);
-    setroom_uuid_for_order(uuid_room)
+    setroom_uuid_for_order(uuid_room);
     set_Contract_Room_wallet_addr(api[0]);
     set_Contract_phone(api[1]);
     set_Contract_Room_type(api[2]);
@@ -236,10 +279,12 @@ function Room_info_card() {
       (item) => !equiment_copy.includes(item)
     );
     set_Contract_equimentfulse(equiment_false);
-    console.log(image_files);
+    console.log(api);
     // console.log(equiment_false);
     getSlider_Card(image_files);
-    setLoading(false)
+    setLoading(false);
+
+    getRoomComment(contractInstance_provider, uuid_room);
   }
   {
     /*//TODO:有時間把Slider_Card寫成一個元件(MAP)*/
@@ -347,192 +392,214 @@ function Room_info_card() {
           </Carousel>
         </div>
       </div>
-      
-      {loading ? <Skeleton height="50vh" visible={true}></Skeleton>:<><div className={classes.reserveMain}>
-        <div className={classes.reservediv}>
-        <div className={classes.reserveLeft}>
-            {/*left*/}
-            <div
-              style={{
-                display: "flex",
-                flexDirection:"column",
-                marginTop: "10px",
-              }}
-            >
-              <span className={classes.reserveRoomName}>
-                {Contract_Room_name}{" "}
-              </span>
-              <div className={classes.RightCtrlWindow}>
-                <span className={classes.roomPrice}>
-                  NT.{Contract_Room_money}
+
+      {loading ? (
+        <Skeleton height="50vh" visible={true}></Skeleton>
+      ) : (
+        <>
+          <div className={classes.reserveMain}>
+            <div className={classes.reservediv}>
+              <div className={classes.reserveLeft}>
+                {/*left*/}
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    marginTop: "5vh",
+                  }}
+                >
+                  <span className={classes.reserveRoomName}>
+                    {Contract_Room_name}{" "}
+                  </span>
+                  <div className={classes.RightCtrlWindow}>
+                    <span className={classes.roomPrice}>
+                      NT.{Contract_Room_money}
+                    </span>
+                    <span className={classes.roomPriceDescribe}>
+                      全星期(一~日)
+                    </span>
+                    <br />
+                  </div>
+                </div>
+                <span className={classes.roomBasicDescription}>
+                  房東錢包地址: {Contract_Room_wallet_addr}
+                  <br />
+                  房間地址: {Contract_Room_address}
+                  <br />
+                  房型: {Contract_Room_type}人房
+                  <br />
+                  備註: 無<br />
                 </span>
-                <span className={classes.roomPriceDescribe}>全星期(一~日)</span>
-                <br />
+                <p className={classes.roomDescription}>{Contract_introduce}</p>
+                <div className={classes.iconSection}>
+                  {/*//TODO:小遺憾 沒有順序*/}
+                  {Contract_equiment.map((thekey, index) => {
+                    let iconContent;
+                    console.log(thekey, index);
+                    switch (thekey) {
+                      case "free_parking":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <CarOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;免費停車
+                          </div>
+                        );
+                      case "free_wifi":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <WifiOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;免費網路
+                          </div>
+                        );
+
+                      case "spa":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <FireOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;附有溫泉
+                          </div>
+                        );
+                      case "tub":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <BathtubIcon style={{ fontSize: "1.5rem" }} />
+                            &nbsp;附有浴缸
+                          </div>
+                        );
+                      case "coffee_shop":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <CoffeeOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;有咖啡廳
+                          </div>
+                        );
+                      case "Gym":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 1 : 0.3 }}
+                          >
+                            <FitnessCenterIcon style={{ fontSize: "1.5rem" }} />
+                            &nbsp;有健身房
+                          </div>
+                        );
+                      default:
+                        iconContent = "UNKNOWN";
+                        break;
+                    }
+                  })}
+                  {Contract_equimentfulse.map((thekey, index) => {
+                    let iconContent;
+                    console.log(thekey, index);
+                    switch (thekey) {
+                      case "free_parking":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <CarOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;免費停車
+                          </div>
+                        );
+                      case "free_wifi":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <WifiOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;免費網路
+                          </div>
+                        );
+
+                      case "spa":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <FireOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;附有溫泉
+                          </div>
+                        );
+                      case "tub":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <BathtubIcon style={{ fontSize: "1.5rem" }} />
+                            &nbsp;附有浴缸
+                          </div>
+                        );
+                      case "coffee_shop":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <CoffeeOutlined style={{ fontSize: "1.5rem" }} />
+                            &nbsp;有咖啡廳
+                          </div>
+                        );
+                      case "Gym":
+                        return (
+                          <div
+                            className={classes.roomIcon}
+                            style={{ opacity: thekey ? 0.3 : 1 }}
+                          >
+                            <FitnessCenterIcon style={{ fontSize: "1.5rem" }} />
+                            &nbsp;有健身房
+                          </div>
+                        );
+                      default:
+                        iconContent = "UNKNOWN";
+                        break;
+                    }
+                  })}
+                </div>
+                <Divider my="xs" label="評論" labelPosition="center" />
+                <ScrollArea style={{ width: "100%", height: 200,borderRadius:"20px",marginBottom:"20px" }}>
+                  <List
+                    spacing="md"
+                    size="md"
+                    center
+                    className={classes.listbackcolor}
+                  >
+                    {are_room_null? "目前無評論!":room_comment_compo}
+                    <Divider my="xs" label="" labelPosition="center" />
+                  </List>
+                </ScrollArea>
               </div>
             </div>
-            <span className={classes.roomBasicDescription}>
-              房東錢包地址: {Contract_Room_wallet_addr}
-              <br />
-              房間地址: {Contract_Room_address}
-              <br />
-              房型: {Contract_Room_type}人房
-              <br />
-              備註: 無<br />
-            </span>
-            <p className={classes.roomDescription}>{Contract_introduce}</p>
-            <div className={classes.iconSection}>
-              {/*//TODO:小遺憾 沒有順序*/}
-              {Contract_equiment.map((thekey, index) => {
-                let iconContent;
-                console.log(thekey, index);
-                switch (thekey) {
-                  case "free_parking":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <CarOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;免費停車
-                      </div>
-                    );
-                  case "free_wifi":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <WifiOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;免費網路
-                      </div>
-                    );
-
-                  case "spa":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <FireOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;附有溫泉
-                      </div>
-                    );
-                  case "tub":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <BathtubIcon style={{ fontSize: "1.5rem" }} />
-                        &nbsp;附有浴缸
-                      </div>
-                    );
-                  case "coffee_shop":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <CoffeeOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;有咖啡廳
-                      </div>
-                    );
-                  case "Gym":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 1 : 0.3 }}
-                      >
-                        <FitnessCenterIcon style={{ fontSize: "1.5rem" }} />
-                        &nbsp;有健身房
-                      </div>
-                    );
-                  default:
-                    iconContent = "UNKNOWN";
-                    break;
-                }
-              })}
-              {Contract_equimentfulse.map((thekey, index) => {
-                let iconContent;
-                console.log(thekey, index);
-                switch (thekey) {
-                  case "free_parking":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <CarOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;免費停車
-                      </div>
-                    );
-                  case "free_wifi":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <WifiOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;免費網路
-                      </div>
-                    );
-
-                  case "spa":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <FireOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;附有溫泉
-                      </div>
-                    );
-                  case "tub":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <BathtubIcon style={{ fontSize: "1.5rem" }} />
-                        &nbsp;附有浴缸
-                      </div>
-                    );
-                  case "coffee_shop":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <CoffeeOutlined style={{ fontSize: "1.5rem" }} />
-                        &nbsp;有咖啡廳
-                      </div>
-                    );
-                  case "Gym":
-                    return (
-                      <div
-                        className={classes.roomIcon}
-                        style={{ opacity: thekey ? 0.3 : 1 }}
-                      >
-                        <FitnessCenterIcon style={{ fontSize: "1.5rem" }} />
-                        &nbsp;有健身房
-                      </div>
-                    );
-                  default:
-                    iconContent = "UNKNOWN";
-                    break;
-                }
-              })}
+            <div className={classes.Orderdiv}>
+              <Order
+                room_uuid_for_order={room_uuid_for_order}
+                Contract_Room_money={Contract_Room_money}
+                Contract_Room_name={Contract_Room_name}
+                Contract_Room_address={Contract_Room_address}
+                Contract_Room_wallet_addr={Contract_Room_wallet_addr}
+              />
             </div>
-
           </div>
-        </div>
-        <div className={classes.Orderdiv}>
-          <Order room_uuid_for_order={room_uuid_for_order} Contract_Room_money={Contract_Room_money} 
-                Contract_Room_name={Contract_Room_name} Contract_Room_address={Contract_Room_address}
-                Contract_Room_wallet_addr={Contract_Room_wallet_addr}/>
-        </div>
-        
-      </div></>}
+        </>
+      )}
     </div>
   );
 }
