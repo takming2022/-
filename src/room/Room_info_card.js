@@ -12,6 +12,7 @@ import {
   ThemeIcon,
   ScrollArea,
   Divider,
+  Box,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import {
@@ -27,6 +28,7 @@ import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
 import Order from "../Order/Order";
 import Room_comment from "./Room_comment";
+import { height, margin } from "@mui/system";
 const useStyles = createStyles((theme) => ({
   root: {
     backgroundColor:
@@ -36,7 +38,7 @@ const useStyles = createStyles((theme) => ({
   Carousel_div: {
     backgroundColor:
       theme.colorScheme === "dark" ? theme.colors.dark[7] : "#E5E8EB",
-    margin: "10px 0px 0px 0px",
+    margin: " 10px 0px 0px 0px",
     height: window.innerWidth < 500 ? 226 : 326,
     borderBottom:
       theme.colorScheme === "dark"
@@ -47,6 +49,7 @@ const useStyles = createStyles((theme) => ({
         ? "1px solid " + theme.colors.dark[5]
         : "1px solid #EDEFF2",
     width: "100%",
+   
   },
   reservediv: {
     display: "flex",
@@ -69,19 +72,19 @@ const useStyles = createStyles((theme) => ({
     height: "70%",
     marginTop: "5vh",
     alignItems: "center",
-    marginBottom:"10vh",
+    marginBottom: "10vh",
     [theme.fn.smallerThan("1024")]: {
       display: "flex",
       height: "75%",
       flexDirection: "column",
       marginTop: "10vh",
-      marginBottom:"10vh"
+      marginBottom: "10vh",
     },
   },
   reserveLeft: {
     // border: '1px solid white',
     width: "90%",
-    maxWidth: "800px",
+    maxWidth: "1800px",
     position: "relative",
   },
 
@@ -103,6 +106,7 @@ const useStyles = createStyles((theme) => ({
     fontFamily: "NotoSansTC-Medium,Noto Sans TC,sans-serif",
     width: "100%",
     wordWrap: "break-word",
+    
   },
   roomBasicDescription: {
     display: "inline-block",
@@ -206,6 +210,7 @@ const useStyles = createStyles((theme) => ({
 function Room_info_card({ theroom_comment, comment_User }) {
   //底下取得當前網址
   const location = useLocation();
+
   const [loading, setLoading] = useState(true);
   //
   const [usewidth, setusewidth] = useState(window.innerWidth);
@@ -231,13 +236,16 @@ function Room_info_card({ theroom_comment, comment_User }) {
   async function getRoomComment(contractInstance_provider, uuid_room) {
     let api = await contractInstance_provider.getComment(uuid_room);
     let room_comment_arr = [];
-    if (api[0] =="") {
-      setare_room_null(true)
-    }else{
+    if (api[0] == "") {
+      setare_room_null(true);
+    } else {
       // console.log(api[0] == "")
       api[0].map((element, index) => {
         room_comment_arr[index] = (
-          <Room_comment theroom_comment={api[1][index]} comment_User={element} />
+          <Room_comment
+            theroom_comment={api[1][index]}
+            comment_User={element}
+          />
         );
       });
       setroom_comment_compo(room_comment_arr);
@@ -279,8 +287,8 @@ function Room_info_card({ theroom_comment, comment_User }) {
       (item) => !equiment_copy.includes(item)
     );
     set_Contract_equimentfulse(equiment_false);
-    console.log(api);
-    // console.log(equiment_false);
+    // console.log(api);
+    // console.log(image_files);
     getSlider_Card(image_files);
     setLoading(false);
 
@@ -291,69 +299,15 @@ function Room_info_card({ theroom_comment, comment_User }) {
   }
   async function getSlider_Card(image_files) {
     let slider_arr = [];
-    switch (image_files.length) {
-      case 1:
-        for (let index = 0; index < image_files.length; index++) {
-          slider_arr[index] = (
-            <Carousel.Slide
-              style={{ width: "100vw" }}
-              key={
-                "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-              }
-            >
-              <Image
-                height="300px"
-                src={
-                  "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-                }
-              />
-            </Carousel.Slide>
-          );
-        }
-        setSliderList(slider_arr);
-        break;
-      case 2:
-        for (let index = 0; index < image_files.length; index++) {
-          slider_arr[index] = (
-            <Carousel.Slide
-              style={{ width: "50vw" }}
-              key={
-                "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-              }
-            >
-              <Image
-                height="300px"
-                src={
-                  "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-                }
-              />
-            </Carousel.Slide>
-          );
-        }
-        setSliderList(slider_arr);
-        break;
-      case 3:
-        for (let index = 0; index < image_files.length; index++) {
-          slider_arr[index] = (
-            <Carousel.Slide
-              key={
-                "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-              }
-            >
-              <Image
-                height="300px"
-                src={
-                  "https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"
-                }
-              />
-            </Carousel.Slide>
-          );
-        }
-        setSliderList(slider_arr);
-        break;
-      default:
-        break;
-    }
+    slider_arr = image_files.map((url) => (
+      <Carousel.Slide key={url} >
+       
+          <Image  width={900} height={300} fit="contain" src={url} />
+          
+      </Carousel.Slide>
+    ));
+    setSliderList(slider_arr);
+
     console.log(Contract_image_files.length);
   }
   useEffect(() => {
@@ -365,29 +319,22 @@ function Room_info_card({ theroom_comment, comment_User }) {
   return (
     <div>
       {/*外框*/}
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%"  }}>
         {" "}
         {/*上滑條*/}
         <div className={classes.Carousel_div}>
           {/*//TODO:有時間把Slider_Card寫成一個元件(MAP)*/}
+
           <Carousel
+            maw={900}
+            height={300}
             className={classes.root}
-            slideSize="100%"
-            height={usewidth < 500 ? 200 : 300}
-            slideGap="xs"
+            mx="auto"
+            slideSize="10%"
             controlsOffset="xs"
-            dragFree
+           
             withIndicators
           >
-            {/* <Carousel.Slide style={{ width: "50vw" }} key={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"}>
-                            <Image height="300px" src={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"} />
-                        </Carousel.Slide>
-                        <Carousel.Slide style={{ width: "50vw" }} key={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"}>
-                            <Image height="300px" src={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"} />
-                        </Carousel.Slide>
-                        <Carousel.Slide style={{ width: "100vw" }} key={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"}>
-                            <Image height="300px" src={"https://www.uwood.com.tw/userfiles/case/35220211101143019.jpg"} />
-                        </Carousel.Slide> */}
             {SliderList}
           </Carousel>
         </div>
@@ -575,14 +522,21 @@ function Room_info_card({ theroom_comment, comment_User }) {
                   })}
                 </div>
                 <Divider my="xs" label="評論" labelPosition="center" />
-                <ScrollArea style={{ width: "100%", height: 200,borderRadius:"20px",marginBottom:"20px" }}>
+                <ScrollArea
+                  style={{
+                    width: "100%",
+                    height: 200,
+                    borderRadius: "20px",
+                    marginBottom: "20px",
+                  }}
+                >
                   <List
                     spacing="md"
                     size="md"
                     center
                     className={classes.listbackcolor}
                   >
-                    {are_room_null? "目前無評論!":room_comment_compo}
+                    {are_room_null ? "目前無評論!" : room_comment_compo}
                     <Divider my="xs" label="" labelPosition="center" />
                   </List>
                 </ScrollArea>

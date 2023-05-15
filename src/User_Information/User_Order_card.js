@@ -3,10 +3,25 @@ import "../Mid/Mid.css";
 import { useNavigate } from "react-router-dom";
 import { abi, address } from "../Contract/Contract";
 import { ethers } from "ethers";
+
 import Web3 from "web3";
-import { createStyles, Tabs, ActionIcon, Paper,Group, Avatar, Text, Accordion,Table } from "@mantine/core";
+
+import {
+  createStyles,
+  Tabs,
+  ActionIcon,
+  Paper,
+  Group,
+  Avatar,
+  Text,
+  Accordion,
+  Table,
+  Button,
+  PasswordInput,
+  Notification 
+} from "@mantine/core";
 import moment from "moment/moment";
-import { IconHome2 } from '@tabler/icons-react';
+import { IconHome2, IconEyeCheck, IconEyeOff ,IconCheck, IconX} from "@tabler/icons-react";
 const User_Order_card = ({ order_id }) => {
   const useStyles = createStyles((theme) => ({
     paper: {
@@ -59,7 +74,10 @@ const User_Order_card = ({ order_id }) => {
   const [User_wallet_address, set_User_wallet_address] = useState("v");
   const [Order_time_start, set_Order_time_start] = useState("");
   const [Order_time_end, set_Order_time_end] = useState("");
-  const [Order_controller, set_Order_controller] = useState(false)
+  const [Order_controller, set_Order_controller] = useState(false);
+
+  const [valuepassw, setValuepassw] = useState("");
+
   function hidden(str) {
     return str.substring(0, 6) + "...." + str.substring(str.length - 4);
   }
@@ -95,11 +113,11 @@ const User_Order_card = ({ order_id }) => {
     );
     set_Order_time_start(time_start);
     set_Order_time_end(time_end);
-    if (Number(api[8]) * 1000 >  Date.now()) {
-      set_Order_controller(true)
-  } else {
-    set_Order_controller(false)
-  }
+    if (Number(api[8]) * 1000 > Date.now()) {
+      set_Order_controller(true);
+    } else {
+      set_Order_controller(false);
+    }
     // var wallet_address;
     // const ether_accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
     // var account = ether_accounts[0];
@@ -126,70 +144,106 @@ const User_Order_card = ({ order_id }) => {
 
     let amount = Web3.utils.toWei("0.0001");
   }
+
+  async function fetchArduino() {
+    if (valuepassw.length === 6) {
+    
+      await fetch("http://192.168.30.208/gpio/" + valuepassw)
+        .then((e) => {
+          console.log("房間密碼更改成功");
+          alert("密碼修改成功");
+        })
+        .catch((e) => {
+          console.log("房間密碼更改失敗" + e);
+        });
+    }else{
+      alert("請輸入六位數")
+    }
+  }
+
   useEffect(() => {
     get_user_room_info();
     console.log(1);
   }, []);
   //
- 
-
-  
 
   //
   return (
-    //TODO:注意這個地方要換一張卡片樣式  改成橫條 
+    //TODO:注意這個地方要換一張卡片樣式  改成橫條
     <>
-    {Order_controller ? <>
-        <Accordion chevronPosition="right" variant="contained">
-            <Accordion.Item value="{order_uuid}" >
-                <Accordion.Control>
-                    <Group noWrap>
-                       <IconHome2  size="3rem"/>
-                        <div>
-                            <Text>{Contract_Room_name}</Text>
-                            <Text size="sm" color="dimmed" weight={400}>
-                                {Contract_Room_address}
-                            </Text>
-                        </div>
-                    </Group>
-                </Accordion.Control>
-                <Accordion.Panel>
-
-                    <Table withBorder striped radius="md">
-                        <thead>
-                            <tr>
-                                <th style={{ textAlign: 'center' }}>房間資訊</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>房間名稱: {Contract_Room_name}</th>
-                            </tr>
-                            <tr>
-                                <th>房間地址: {Contract_Room_address}</th>
-                            </tr>
-                            <tr>
-                                <th>房間價格: {Contract_Room_money}</th>
-                            </tr>
-                            <tr>
-                                <th>入住時間: {Order_time_start}</th>
-                            </tr>
-                            <tr>
-                                <th>退房時間: {Order_time_end}</th>
-                            </tr>
-                        </tbody>
-
-                    </Table>
-
-                </Accordion.Panel>
+      {Order_controller ? (
+        <>
+          <Accordion chevronPosition="right" variant="contained">
+            <Accordion.Item value="{order_uuid}">
+              <Accordion.Control>
+                <Group noWrap>
+                  <IconHome2 size="3rem" />
+                  <div>
+                    <Text>{Contract_Room_name}</Text>
+                    <Text size="sm" color="dimmed" weight={400}>
+                      {Contract_Room_address}
+                    </Text>
+                  </div>
+                </Group>
+              </Accordion.Control>
+              <Accordion.Panel>
+                <Table withBorder striped radius="md">
+                  <thead>
+                    <tr>
+                      <th style={{ textAlign: "center" }}>房間資訊</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th>房間名稱: {Contract_Room_name}</th>
+                    </tr>
+                    <tr>
+                      <th>房間地址: {Contract_Room_address}</th>
+                    </tr>
+                    <tr>
+                      <th>房間價格: {Contract_Room_money}</th>
+                    </tr>
+                    <tr>
+                      <th>入住時間: {Order_time_start}</th>
+                    </tr>
+                    <tr>
+                      <th>退房時間: {Order_time_end}</th>
+                    </tr>
+                  </tbody>
+                  <Group position="right">
+                    <PasswordInput
+                      style={{ width: "60%" }}
+                      placeholder="Password"
+                      defaultValue="secret"
+                      radius="md"
+                      size="md"
+                      maxLength={6}
+                      value={valuepassw}
+                      mask="+7 (999) 999-99-99"
+                      onChange={(event) =>
+                        setValuepassw(event.currentTarget.value)
+                      }
+                      visibilityToggleIcon={({ reveal, size }) =>
+                        reveal ? (
+                          <IconEyeOff size={size} />
+                        ) : (
+                          <IconEyeCheck size={size} />
+                        )
+                      }
+                    />
+                    <Button onClick={fetchArduino}>立即修改密碼</Button>
+                  </Group>
+                </Table>
+              </Accordion.Panel>
             </Accordion.Item>
-        </Accordion>
-        <p></p></> : <></>}
+          </Accordion>
+          <p></p>
+        </>
+      ) : (
+        <></>
+      )}
+    </>
 
-
-
-</>
-   
     // <>
     //   <p></p>
     //   <div className={classes.userCardcontener}>

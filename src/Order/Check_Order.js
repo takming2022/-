@@ -10,7 +10,8 @@ import {
   NumberInput,
   Container,
   Space,
-  Divider
+  Divider,
+  Switch,
 } from "@mantine/core";
 import { IconAt } from "@tabler/icons-react";
 import { v4 as uuidv4 } from "uuid";
@@ -32,6 +33,7 @@ const Check_Order = ({
 }) => {
   const [verification_email, setverification_email] = useState("");
   const [theEmail, settheEmail] = useState("");
+  const [checked, setChecked] = useState(false);
   const [theEmailbackup, settheEmailbackup] = useState("");
   const [theemailCheck, settheemailCheck] = useState();
   const [buttoncheck, setbuttoncheck] = useState(false);
@@ -40,22 +42,21 @@ const Check_Order = ({
   const nextStep = () => {
     if (active == 0) {
       sendEmail();
-      setTimeout(() => {
-        setActive((current) => (current < 3 ? current + 1 : current));
-      }, 1000);
     } else {
       push_Order();
       // console.log(theEmailbackup);
     }
   };
-  const prevStep = () =>
+  const prevStep = () => {
+    setbuttoncheck(false);
     setActive((current) => (current > 0 ? current - 1 : current));
+  };
 
   const data =
     theEmail.trim().length > 0 && !theEmail.includes("@")
       ? ["gmail.com", "outlook.com", "yahoo.com"].map(
-        (provider) => `${theEmail}@${provider}`
-      )
+          (provider) => `${theEmail}@${provider}`
+        )
       : [];
   const Chenck_order_time_start = new Date(datestart_ans).toString();
   const Chenck_order_time_End = new Date(datesEnd_ans).toString();
@@ -83,6 +84,7 @@ const Check_Order = ({
             response.text
           );
           alert("Verification code sent successfully!");
+          setActive((current) => (current < 3 ? current + 1 : current));
         },
         (error) => {
           console.log("Email failed:", error);
@@ -90,7 +92,35 @@ const Check_Order = ({
         }
       );
   }
-
+  async function sendEmailPassword(verificationCode) {
+    settheEmailbackup(theEmail);
+    const templateParams = {
+      user_email_name: theEmail,
+      password: verificationCode,
+      to_email: theEmail,
+    };
+    emailjs
+      .send(
+        "service_39ygwyg",
+        "template_m88jqih",
+        templateParams,
+        "G16P96rYbYW6SAV1U"
+      )
+      .then(
+        (response) => {
+          console.log(
+            "Email sent successfully:",
+            response.status,
+            response.text
+          );
+          alert("PASSWORD code sent successfully!");
+        },
+        (error) => {
+          console.log("Email failed:", error);
+          alert("Email failed. Please try again.");
+        }
+      );
+  }
   function checkemail() {
     // console.log(theemailCheck.toString().length);
     try {
@@ -99,9 +129,8 @@ const Check_Order = ({
           window.alert("正確");
           setbuttoncheck(true);
           setverification_email("");
-          settheEmail("");
-          settheemailCheck("");
 
+          settheemailCheck("");
         } else {
           window.alert("驗證碼錯誤");
         }
@@ -133,28 +162,50 @@ const Check_Order = ({
     var account = ether_accounts[0];
     wallet_address = account;
     let amount = Web3.utils.toWei("0.0001");
-    await contractInstance_singner.add_order(
-      uuidv4(),
-      room_uuid_for_order,
-      Contract_Room_money,
-      Contract_Room_name,
-      Contract_Room_address,
-      Contract_Room_wallet_addr,
-      Contract_datestart_time,
-      Contract_dateEnd_time,
-      { from: wallet_address, value: amount }
-    );
+
+    await contractInstance_singner
+      .add_order(
+        uuidv4(),
+        room_uuid_for_order,
+        Contract_Room_money,
+        Contract_Room_name,
+        Contract_Room_address,
+        Contract_Room_wallet_addr,
+        Contract_datestart_time,
+        Contract_dateEnd_time,
+        { from: wallet_address, value: amount }
+      )
+      .then((e) => {
+        alert("房間預定成功");
+        const passWORD = Math.floor(100000 + Math.random() * 900000);
+        if (checked) {
+          fetch("http://192.168.30.208/gpio/" + passWORD)
+            .then((e) => {
+              console.log("房間密碼更改成功" + passWORD);
+              sendEmailPassword(passWORD);
+            })
+            .catch((e) => {
+              console.log("房間密碼更改失敗" + e);
+            });
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("add_order failed. Please try again.");
+      });
+
     setbuttoncheck(false);
     setActive(0);
     setOpen_Order((o) => !o);
+    settheEmail("");
   }
   return (
     <Modal
       size={window.innerWidth > 800 ? "60%" : "100%"}
       opened={Open_Order}
       onClose={() => {
-        setbuttoncheck(false)
-        setActive(0)
+        setbuttoncheck(false);
+        setActive(0);
         setOpen_Order((o) => !o);
       }}
       title="刊登房間"
@@ -185,14 +236,26 @@ const Check_Order = ({
                   <th>房間價格: {Contract_Room_money}</th>
                 </tr>
                 <tr>
-                  <th>入住時間: {moment(Chenck_order_time_start).format("YYYY年M月D日H點m分")}</th>
+                  <th>
+                    入住時間:{" "}
+                    {moment(Chenck_order_time_start).format(
+                      "YYYY年M月D日H點m分"
+                    )}
+                  </th>
                 </tr>
                 <tr>
-                  <th>退房時間: {moment(Chenck_order_time_End).format("YYYY年M月D日H點m分")}</th>
+                  <th>
+                    退房時間:{" "}
+                    {moment(Chenck_order_time_End).format("YYYY年M月D日H點m分")}
+                  </th>
                 </tr>
               </tbody>
               <Space h="md" />
-              <Divider my="xs" label="pls type ur Email" labelPosition="center" />
+              <Divider
+                my="xs"
+                label="pls type ur Email"
+                labelPosition="center"
+              />
               <Container size="50rem" px={0}>
                 <Autocomplete
                   size="md"
@@ -249,6 +312,13 @@ const Check_Order = ({
               )}
             </>
           )}
+          <Switch
+            onLabel="ON"
+            offLabel="OFF"
+            label="及時修改房間密碼"
+            checked={checked}
+            onChange={(event) => setChecked(event.currentTarget.checked)}
+          />
         </Group>
       </>
     </Modal>

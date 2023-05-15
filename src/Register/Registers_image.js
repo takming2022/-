@@ -9,12 +9,13 @@ const Registers_image =({files,setFiles}) => {
     var ipfs = create(new URL("http://192.192.140.228:5001"));
     // upload files
     const result = await ipfs.add(file);
-    // console.log(result);
+    console.log(result);
     // console.log(result.cid);
-    // console.log(result.path);
+    console.log(result.path);
     const url =result.path
     file['url'] = "http://192.192.140.228:8080/ipfs/"+url;
     console.log(file);
+    console.log(url);
     setFiles((prev) => {
       let newFiles = [...prev];
       newFiles.push(file);

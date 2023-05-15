@@ -53,8 +53,10 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
     let amount = Web3.utils.toWei("0.0001");
     const newarr = [...files]
     for (let i = 0; i < files.length; i++) {
-      newarr[i] = files[0].url
+      newarr[i] = files[i].url
+      
     }
+    console.log("asdasfasdas"+newarr);
     await contractInstance_singner.add_Ld_room(Contract_phone, Contract_Room_type.toString(), 
                                                 Contract_Room_address, Contract_introduce, Contract_Room_name, Contract_equiment, 
                                                 uuidv4(), newarr, Contract_Room_money.toString(), { from: wallet_address, value: amount })
@@ -64,7 +66,9 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
       })
     let api = await contractInstance_provider.romms_length();
   }
-  
+  function testlook() {
+    console.log(files);
+  }
   return (
     <Modal
       size={window.innerWidth > 800 ? '60%' : '100%'}
@@ -91,6 +95,7 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
               Contract_introduce={Contract_introduce} set_Contract_introduce={set_Contract_introduce}
               Contract_equiment={Contract_equiment} set_Contract_equiment={set_Contract_equiment} />
             <Group position="center" mt="xl">
+              
               <Button variant="default" onClick={prevStep}>Back</Button>
               {Contract_Room_address == '' || Contract_phone == '' || Contract_Room_name == '' || Contract_equiment == [] || Contract_Room_money == 0 || Contract_Room_type == 0 || Contract_introduce == '' ? <Button data-disabled onClick={nextStep}>Next step</Button> : <Button onClick={nextStep}>Next step</Button>}
             </Group>
@@ -107,6 +112,7 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
             <Group position="center" mt="xl">
               <Button variant="default" onClick={prevStep}>Back</Button>
               <Button onClick={published}>確定刊登</Button>
+              {/* <Button onClick={testlook}>TEST</Button> */}
             </Group>
           </Stepper.Completed>
         </Stepper>
