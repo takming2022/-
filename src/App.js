@@ -17,7 +17,6 @@ function App() {
   const [demofishtorf, setDemofishtorf] = useState(false)
   const [historytorf , setHistorytorf] = useState(false)
   return (
-<<<<<<< HEAD
     <div className="App">
       {/* <Test /> */}
       <Router>
@@ -31,31 +30,6 @@ function App() {
       {historytorf && <History setHistorytorf={setHistorytorf}/>}
       {demofishtorf && <Demofish />}
       
-=======
-    <div>
-      <Layout
-        style={{
-
-          minHeight: '100vh',
-        }}
-      >
-        <Left />
-        <Layout className="site-layout" style={{ backgroundColor: '#E5E8EB' }}>
-          <Headers />
-          <Router>
-            <Routes>
-              <Route exact path='/' element={<MId />} />
-              <Route exact path='/room/:id' element={<Test />} />
-              <Route exact path='/user' element={<User/>} />
-              <Route exact path='/checkin' element={<Checkin />}/>
-              <Route exact path='/reserve' element={<Reserve />}/>
-              <Route exact path='/tbcomment' element={<Tbcomment />}/>
-            </Routes>
-          </Router>
-          <Fotter />
-        </Layout>
-      </Layout>
->>>>>>> d4bc002b4f024e199973949d81aee5118bb6c5ff
     </div>
   );
 }
