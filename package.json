@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+<<<<<<< HEAD
     "date-fns": "^2.29.2",
     "ethereumjs-testrpc": "^6.0.3",
     "ethers": "^5.7.0",
@@ -14,18 +15,32 @@
     "framer-motion": "^9.1.7",
     "logs-decoder": "^3.1.4",
     "moment": "^2.29.4",
+=======
+    "antd": "^5.0.7",
+    "ethers": "^5.7.2",
+    "hexo-theme-butterfly": "^4.7.0",
+    "ipfs-http-client": "^60.0.0",
+>>>>>>> d4bc002b4f024e199973949d81aee5118bb6c5ff
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",
     "react-dom": "^18.2.0",
     "react-number-format": "^4.9.3",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+<<<<<<< HEAD
     "retry": "^0.13.1",
     "rxjs": "^7.5.6",
     "web-vitals": "^2.1.4",
     "web3": "^1.7.5",
     "web3-eth": "^1.7.5",
     "web3modal": "^1.9.8"
+=======
+    "react-select": "^5.7.0",
+    "sweetalert2": "^11.6.16",
+    "sweetalert2-react-content": "^5.0.7",
+    "web-vitals": "^2.1.4",
+    "web3": "^1.8.1"
+>>>>>>> d4bc002b4f024e199973949d81aee5118bb6c5ff
   },
   "scripts": {
     "start": "react-app-rewired start",
