@@ -50,7 +50,6 @@ const useStyles = createStyles((theme) => ({
         ? "1px solid " + theme.colors.dark[5]
         : "1px solid #EDEFF2",
     width: "100%",
-   
   },
   reservediv: {
     display: "flex",
@@ -107,7 +106,6 @@ const useStyles = createStyles((theme) => ({
     fontFamily: "NotoSansTC-Medium,Noto Sans TC,sans-serif",
     width: "100%",
     wordWrap: "break-word",
-    
   },
   roomBasicDescription: {
     display: "inline-block",
@@ -301,10 +299,8 @@ function Room_info_card({ theroom_comment, comment_User }) {
   async function getSlider_Card(image_files) {
     let slider_arr = [];
     slider_arr = image_files.map((url) => (
-      <Carousel.Slide key={url} >
-       
-          <Image  width={900} height={300} fit="contain" src={url} />
-          
+      <Carousel.Slide key={url}>
+        <Image width={900} height={300} fit="contain" src={url} />
       </Carousel.Slide>
     ));
     setSliderList(slider_arr);
@@ -320,20 +316,20 @@ function Room_info_card({ theroom_comment, comment_User }) {
   return (
     <div>
       {/*外框*/}
-      <div style={{ width: "100%"  }}>
+      <div style={{ width: "100%" }}>
         {" "}
         {/*上滑條*/}
         <div className={classes.Carousel_div}>
           {/*//TODO:有時間把Slider_Card寫成一個元件(MAP)*/}
 
           <Carousel
+            style={{ maxWidth: "300px" }}
             maw={900}
             height={300}
             className={classes.root}
             mx="auto"
             slideSize="10%"
             controlsOffset="xs"
-           
             withIndicators
           >
             {SliderList}
@@ -543,11 +539,9 @@ function Room_info_card({ theroom_comment, comment_User }) {
                 </ScrollArea>
                 <Divider my="xs" label="我是廣告" labelPosition="center" />
                 <div>
-
                   <Room_AD />
                 </div>
               </div>
-              
             </div>
             <div className={classes.Orderdiv}>
               <Order

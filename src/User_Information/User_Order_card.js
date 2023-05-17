@@ -142,13 +142,13 @@ const User_Order_card = ({ order_id }) => {
     var account = ether_accounts[0];
     wallet_address = account;
 
-    let amount = Web3.utils.toWei("0.0001");
+    let amount = Web3.utils.toWei("0.01");
   }
 
   async function fetchArduino() {
     if (valuepassw.length === 6) {
     
-      await fetch("http://192.168.30.208/gpio/" + valuepassw)
+      await fetch("http://192.168.29.208/gpio/" + valuepassw)
         .then((e) => {
           console.log("房間密碼更改成功");
           alert("密碼修改成功");

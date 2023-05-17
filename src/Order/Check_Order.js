@@ -161,7 +161,7 @@ const Check_Order = ({
     });
     var account = ether_accounts[0];
     wallet_address = account;
-    let amount = Web3.utils.toWei("0.0001");
+    let amount = Web3.utils.toWei("0.01");
 
     await contractInstance_singner
       .add_order(
@@ -179,7 +179,7 @@ const Check_Order = ({
         alert("房間預定成功");
         const passWORD = Math.floor(100000 + Math.random() * 900000);
         if (checked) {
-          fetch("http://192.168.30.208/gpio/" + passWORD)
+          fetch("http://192.168.29.208/gpio/" + passWORD)
             .then((e) => {
               console.log("房間密碼更改成功" + passWORD);
               sendEmailPassword(passWORD);
@@ -315,7 +315,7 @@ const Check_Order = ({
           <Switch
             onLabel="ON"
             offLabel="OFF"
-            label="及時修改房間密碼"
+            label="即時修改房間密碼"
             checked={checked}
             onChange={(event) => setChecked(event.currentTarget.checked)}
           />

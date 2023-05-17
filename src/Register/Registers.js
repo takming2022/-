@@ -50,7 +50,7 @@ const Registers = ({ Open_Register, SetOpen_Register }) => {
     var account = ether_accounts[0];
     wallet_address = account;
 
-    let amount = Web3.utils.toWei("0.0001");
+    let amount = Web3.utils.toWei("0.01");
     const newarr = [...files]
     for (let i = 0; i < files.length; i++) {
       newarr[i] = files[i].url

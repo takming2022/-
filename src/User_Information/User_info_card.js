@@ -101,7 +101,7 @@ const User_info_card = ({ room_id }) => {
     var account = ether_accounts[0];
     wallet_address = account;
 
-    let amount = Web3.utils.toWei("0.0001");
+    let amount = Web3.utils.toWei("0.01");
     await contractInstance_singner
       .clearroom(room_id, { from: wallet_address, value: amount })
       .then((res) => {

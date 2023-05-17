@@ -25,7 +25,7 @@ const User_evaluate_modal = ({
     });
     var account = ether_accounts[0];
     wallet_address = account;
-    let amount = Web3.utils.toWei("0.0001");
+    let amount = Web3.utils.toWei("0.01");
 
     await contractInstance_singner
       .doComment(commentText, room_uuid, {
