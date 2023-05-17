@@ -17,7 +17,7 @@ const mockdata = [
     icon: IconGauge,
     links: [
       { label: 'Ultimate Survivor', link: 'https://ultimate-survior2.web.app/' },
-      { label: 'Market Movers', link: '/' },
+      { label: 'Market Movers', link: 'http://192.192.140.228:3000/' },
     ],
   },
 ];
