@@ -69,8 +69,13 @@ const Mid = () => {
         );
     }
 
-    useEffect(() => {
-        get_room_card()
+    useEffect( () => {
+        setTimeout( async() => {
+            await get_room_card()
+            setLoading(false)
+        }, 1);
+        
+        
     }, [])
     return (
         <div style={{ width: '100%' }}>
