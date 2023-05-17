@@ -12,45 +12,12 @@ import { LinksGroup } from './LinksGroup';
 
 const mockdata = [
   { label: '主頁',  initiallyOpened: true,icon: IconHome,link:'/',linkk:'/'},
-  { label: '遊戲',  initiallyOpened: true,icon: IconGauge,link:'/',linkk:'https://ultimate-survior2.web.app/'},
   {
-    label: '亞洲熱門地區',
-    icon: IconNotes,
+    label: '遊戲',
+    icon: IconGauge,
     links: [
-      { label: '台灣', link: '/' },
-      { label: '中國', link: '/' },
-      { label: '日本', link: '/' },
-      { label: '泰國', link: '/' },
-    ],
-  },
-  {
-    label: '美洲熱門地區',
-    icon: IconNotes,
-    links: [
-      { label: '紐約', link: '/' },
-      { label: '洛杉磯', link: '/' },
-      { label: '聖地牙哥', link: '/' },
-      { label: '聖保羅', link: '/' },
-    ],
-  },
-  {
-    label: '非洲熱門地區',
-    icon: IconNotes,
-    links: [
-      { label: '埃及', link: '/' },
-      { label: '尼日利亞', link: '/' },
-      { label: '摩洛哥', link: '/' },
-      { label: '突尼斯', link: '/' },
-    ],
-  },
-  {
-    label: '大洋洲熱門地區',
-    icon: IconNotes,
-    links: [
-      { label: '印度尼西亞', link: '/' },
-      { label: '澳大利亞', link: '/' },
-      { label: '紐西蘭', link: '/' },
-      { label: '吐瓦魯', link: '/' },
+      { label: 'Ultimate Survivor', link: 'https://ultimate-survior2.web.app/' },
+      { label: 'Market Movers', link: '/' },
     ],
   },
 ];

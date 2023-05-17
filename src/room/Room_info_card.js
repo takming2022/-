@@ -29,6 +29,7 @@ import { ethers } from "ethers";
 import Order from "../Order/Order";
 import Room_comment from "./Room_comment";
 import { height, margin } from "@mui/system";
+import Room_AD from "./Room_AD";
 const useStyles = createStyles((theme) => ({
   root: {
     backgroundColor:
@@ -540,7 +541,13 @@ function Room_info_card({ theroom_comment, comment_User }) {
                     <Divider my="xs" label="" labelPosition="center" />
                   </List>
                 </ScrollArea>
+                <Divider my="xs" label="我是廣告" labelPosition="center" />
+                <div>
+
+                  <Room_AD />
+                </div>
               </div>
+              
             </div>
             <div className={classes.Orderdiv}>
               <Order

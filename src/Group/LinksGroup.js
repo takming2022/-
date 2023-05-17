@@ -52,7 +52,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, linkk })
       className={classes.link}
       href={link.link}
       key={link.label}
-      onClick={(event) => event.preventDefault()}
+      onClick={(event) => {event.preventDefault();window.open(link.link) }}
     >
       {link.label}
     </Text>
