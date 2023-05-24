@@ -1,38 +1,23 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#HeaderActions {
+  position:relative;
+ 
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* @media screen and (max-width:1312px) {
+  #HeaderActions {
+    position:absolute;
+    left:0;
+    animation-name:oxxo;
+    animation-duration:0.5s; 
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+} */
+/* 關鍵影格(@keyframe) */
+/* @keyframes oxxo{
+  from{
+      left: -300px;
   }
-  to {
-    transform: rotate(360deg);
+  to{
+      left:0px;
   }
-}
+} */
+
