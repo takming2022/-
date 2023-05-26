@@ -1,5 +1,5 @@
 export const op_wallet_address = ""
-export const address = '0xbAEA9f2A452bB482676B2c7C17CB5Ba233520fdA'//合約地址
+export const address = '0x47E1060d2A8a777CFe130C03752b9eDEf9Eed52b'//合約地址
 export const abi =
 [
 	{
@@ -114,6 +114,29 @@ export const abi =
 		"name": "addAuthorizedAddress",
 		"outputs": [],
 		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "room_id",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "startTime",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "endTime",
+				"type": "uint256"
+			}
+		],
+		"name": "check_order",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
