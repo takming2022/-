@@ -208,7 +208,7 @@ const Check_Order = ({
         setActive(0);
         setOpen_Order((o) => !o);
       }}
-      title="刊登房間"
+      title="預約房間"
       centered
     >
       <>
@@ -218,7 +218,7 @@ const Check_Order = ({
           breakpoint="sm"
           allowNextStepsSelect={false}
         >
-          <Stepper.Step label="First step" description="Create an account">
+          <Stepper.Step label="First step" description="請輸入email">
             <Table withBorder striped>
               <thead>
                 <tr>
@@ -270,7 +270,7 @@ const Check_Order = ({
               <Group position="center" mt="xl"></Group>
             </Table>
           </Stepper.Step>
-          <Stepper.Step label="Second step" description="Verify email">
+          <Stepper.Step label="Second step" description="請輸入驗證碼">
             <Input
               icon={<IconAt />}
               placeholder="Your email"
