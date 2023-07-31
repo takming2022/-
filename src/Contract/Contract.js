@@ -1,5 +1,5 @@
 export const op_wallet_address = ""
-export const address = '0x47E1060d2A8a777CFe130C03752b9eDEf9Eed52b'//合約地址
+export const address = '0x0eCE04Cf6Df309568145Da556A3Ba962d333E223'//合約地址
 export const abi =
 [
 	{

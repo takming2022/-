@@ -16,8 +16,8 @@ const mockdata = [
     label: '遊戲',
     icon: IconGauge,
     links: [
-      { label: 'Ultimate Survivor', link: 'http://192.192.140.228:3001/' },
-      { label: 'Market Movers', link: 'http://192.192.140.228:3000/' },
+      { label: 'Ultimate Survivor', link: 'http://localhost:3001/' },
+      { label: 'Market Movers', link: 'http://localhost:3002/' },
     ],
   },
 ];

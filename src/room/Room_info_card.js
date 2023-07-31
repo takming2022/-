@@ -69,6 +69,7 @@ const useStyles = createStyles((theme) => ({
   reserveMain: {
     display: "flex",
     justifyContent: "center",
+    width:"95vw",
     height: "70%",
     marginTop: "5vh",
     alignItems: "center",
